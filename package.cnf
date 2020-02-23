@@ -1,0 +1,21 @@
+#
+# openLilyLib/lute-tab configuration
+#
+
+name: lute-tab
+display-name: lute-tab
+short-description: Toolbox for Lute Tablature
+description: <
+  A set of tools and fonts used for typesetting calligraphic
+  lute tablature in GNU LilyPond.
+  >
+modules: [
+  col-line
+  tab-duration
+  tab-articulation
+  ]
+oll-core: 0.5.0
+maintainers: [
+  Brian Bartling <brian.bartling23@gmail.com>
+  ]
+version: 0.1.0
