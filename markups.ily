@@ -45,7 +45,15 @@ index = \finger\markup\index
 
 colLine = #(make-music 'ColLineEvent)
 
-#(set! default-script-alist (append default-script-alist `(("luteFrenchAppoggiaturaBelow" . ()))))
+#(define-markup-command (label-glyph layout props glyphname) (string?)
+  (let* ((glyph-assoc (assoc glyphname smufl-map)))
+   (begin
+    (ly:debug "Using glyph ~a : ~a from font ~a\n" 
+    	        glyphname (cdr glyph-assoc) (getOption '(lute-tab labelFont)))
+     (interpret-markup layout props
+      (markup (#:fontsize 5 
+      	       #:override `(font-name . (getOption '(lute-tab labelFont)))
+	       #:char (cdr glyph-assoc)))))))
 
 arpBelow = #(make-music 'TabArticulationEvent 
 	     'articulation-type "luteFrenchAppoggiaturaBelow"

@@ -6,10 +6,10 @@
 \registerOption lute-tab.tab-duration.slantType     #'extend
 \registerOption lute-tab.tab-duration.maxGrid       #4
 
-\registerOption lute-tab.labelFont                  #'Welde
+\registerOption lute-tab.labelFont                  #"Bravura"
 
-\include   "snippets/custom-music-fonts/smufl/definitions.ily"
-\include   "fonts/definitions.ily"
+
+\include   "snippets/custom-music-fonts/smufl/smufldata.ily"
 
 \include   "col-line/engine.ily"
 \include   "tab-articulation/engine.ily"

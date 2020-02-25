@@ -9,7 +9,7 @@
          (font-size         (ly:grob-object me 'font-size))
 	 (padding           (ly:grob-object me 'padding))
 	 (right-padding     (ly:grob-property me 'right-padding))
-  	 (symbol-markup     (markup #:smuflglyph articulation-type
+  	 (symbol-markup     (markup #:label-glyph articulation-type
 	 		     #:hspace right-padding)))
 
    (ly:grob-set-property! me 'text symbol-markup)

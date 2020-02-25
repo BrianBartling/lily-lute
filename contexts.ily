@@ -47,17 +47,12 @@
     stringTunings = \stringTuning <g, c f a d' g'>
     additionalBassStrings = \stringTuning <d,>
 
-
-%%    fretLabels = \markuplist {"a" "b" "r" "d" "e" "f" "g" "h" "i" "k"}
-
-      fretLabels = \markuplist {
-      		     \label-glyph "luteFrenchFretA" \label-glyph "luteFrenchFretB"
-      		     \label-glyph "luteFrenchFretC" \label-glyph "luteFrenchFretD"
-      		     \label-glyph "luteFrenchFretE" \label-glyph "luteFrenchFretF"
-      		     \label-glyph "luteFrenchFretG" \label-glyph "luteFrenchFretH"
-      		   }
-
-      % \override BarLine.bar-extent = #modify-bar-line-extent
+    fretLabels = \markuplist {
+      		   \label-glyph "luteFrenchFretA" \label-glyph "luteFrenchFretB"
+      		   \label-glyph "luteFrenchFretC" \label-glyph "luteFrenchFretD"
+      		   \label-glyph "luteFrenchFretE" \label-glyph "luteFrenchFretF"
+      		   \label-glyph "luteFrenchFretG" \label-glyph "luteFrenchFretH"
+      		 }
   }
 
   \inherit-acceptability "FrenchTabStaff" "TabStaff"

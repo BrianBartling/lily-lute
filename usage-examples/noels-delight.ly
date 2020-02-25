@@ -47,7 +47,7 @@ m = {
 }
 
 \header {
-  piece = "Noel's Delight — W. 7r"
+  piece = "Noel's Delight"
 }
 
 \score {
