@@ -49,10 +49,10 @@ colLine = #(make-music 'ColLineEvent)
   (let* ((glyph-assoc (assoc glyphname smufl-map)))
    (begin
     (ly:debug "Using glyph ~a : ~a from font ~a\n" 
-    	        glyphname (cdr glyph-assoc) (getOption '(lute-tab labelFont)))
+    	        glyphname (cdr glyph-assoc) (getOption '(tab-tools labelFont)))
      (interpret-markup layout props
       (markup (#:fontsize 5 
-      	       #:override `(font-name . (getOption '(lute-tab labelFont)))
+      	       #:override `(font-name . (getOption '(tab-tools labelFont)))
 	       #:char (cdr glyph-assoc)))))))
 
 arpBelow = #(make-music 'TabArticulationEvent 

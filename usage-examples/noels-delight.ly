@@ -1,7 +1,7 @@
 \version "2.21.0"
 
 \include "oll-core/package.ily"
-\loadPackage lute-tab
+\loadPackage tab-tools
 
 m = {
   \time 2/4 \partial 8 g'8

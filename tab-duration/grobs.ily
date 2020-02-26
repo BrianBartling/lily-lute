@@ -1,6 +1,14 @@
 \include "../make-grobs.ily"
 
 %%%
+%%% Grob properties
+%%%
+
+#(define-grob-property 'top-space number? "The amount of space at the top of the grid")
+#(define-grob-property 'grid-space number? "The amount of space between each gridline")
+#(define-grob-property 'overshoot pair? "how much the grid is extended to the left & right")
+
+%%%
 %%% Grob routines
 %%%							     
 

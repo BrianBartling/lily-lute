@@ -1,12 +1,12 @@
-\registerOption lute-tab.raiseNoteHeads             #0.32
+\registerOption tab-tools.raiseNoteHeads             #0.32
 
-\registerOption lute-tab.tab-duration.hideRepeated  ##t
-\registerOption lute-tab.tab-duration.useGrids      ##t
-\registerOption lute-tab.tab-duration.gridSlant     #.75
-\registerOption lute-tab.tab-duration.slantType     #'extend
-\registerOption lute-tab.tab-duration.maxGrid       #4
+\registerOption tab-tools.tab-duration.hideRepeated  ##t
+\registerOption tab-tools.tab-duration.useGrids      ##t
+\registerOption tab-tools.tab-duration.gridSlant     #.75
+\registerOption tab-tools.tab-duration.slantType     #'extend
+\registerOption tab-tools.tab-duration.maxGrid       #4
 
-\registerOption lute-tab.labelFont                  #"Bravura"
+\registerOption tab-tools.labelFont                  #"Bravura"
 
 
 \include   "snippets/custom-music-fonts/smufl/smufldata.ily"

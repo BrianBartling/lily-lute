@@ -1,9 +1,9 @@
 #
-# openLilyLib/lute-tab configuration
+# openLilyLib/tab-tools configuration
 #
 
-name: lute-tab
-display-name: lute-tab
+name: tab-tools
+display-name: tab-tools
 short-description: Toolbox for Lute Tablature
 description: <
   A set of tools and fonts used for typesetting calligraphic

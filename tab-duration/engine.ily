@@ -5,6 +5,17 @@
 \include "grobs.ily"
 
 %%%
+%%% Kill the grid
+%%%
+
+#(hashq-set! music-name-to-property-table 'KillGridEvent
+  '((name . KillGridEvent) (types post-event event kill-grid-event)))
+
+#(define-event-class 'kill-grid-event 'annotate-output-event)
+
+killGrid = #(make-music 'KillGridEvent)
+
+%%%
 %%% Tab Duration data structure
 %%%
 
@@ -153,7 +164,7 @@
 #(define (set-slant tab-duration grid)
   (let 	((length    (/ (ly:grob-property (td-grob tab-duration) 'length)
 		     (ly:staff-symbol-staff-space (td-grob tab-duration))))
-	 (slant     (/ (getOption '(lute-tab tab-duration gridSlant))
+	 (slant     (/ (getOption '(tab-tools tab-duration gridSlant))
 		     (ly:staff-symbol-staff-space (td-grob tab-duration)))))
 
    (begin
@@ -165,14 +176,14 @@
      (lines grid))
 
     (cond 
-     ((equal? (getOption '(lute-tab tab-duration slantType)) 'extend)
+     ((equal? (getOption '(tab-tools tab-duration slantType)) 'extend)
       (ly:grob-set-property! (td-grob tab-duration) 'length
        (+ length (grid-slant tab-duration))))
-     ((equal? (getOption '(lute-tab tab-duration slantType)) 'shift)
+     ((equal? (getOption '(tab-tools tab-duration slantType)) 'shift)
       (ly:grob-set-property! (td-grob tab-duration) 'Y-offset slant))
      (else
       (ly:warning "unrecognized slantType property: ~a" 
-       (getOption '(lute-tab tab-duration slantType))))))))
+       (getOption '(tab-tools tab-duration slantType))))))))
 
 #(define (process-grids tab-duration prev-tab-duration grid translator context)
   (let ((gridspace (/ (+ (ly:moment-main (m-pos tab-duration)) (durlength tab-duration))
@@ -211,7 +222,7 @@
 
      ;; Set the slant for this grob
      (if (and (in-grid? tab-duration) 
-	  (> (getOption '(lute-tab tab-duration gridSlant)) 0))
+	  (> (getOption '(tab-tools tab-duration gridSlant)) 0))
       (set-slant tab-duration grid))))
 
    ;; Format this grob if we are in a grid
@@ -220,7 +231,7 @@
      (ly:grob-set-property! (td-grob tab-duration) 'outside-staff-priority #f)
      (set! (in-grid-count grid) (+ (in-grid-count grid) 1))
 
-     (if (>= (in-grid-count grid) (getOption '(lute-tab tab-duration maxGrid)))
+     (if (>= (in-grid-count grid) (getOption '(tab-tools tab-duration maxGrid)))
       (set! (stop-gridline? grid) #t))
      
      (ly:grob-set-parent! (td-grob tab-duration) Y (td-grob prev-tab-duration))
@@ -262,11 +273,11 @@
      (ly:grob-set-object! (td-grob tab-duration) 'print-flag? #f)
      (ly:grob-set-object! (td-grob tab-duration) 'print-flag? #t))
 
-    (if (and (getOption '(lute-tab tab-duration hideRepeated))
+    (if (and (getOption '(tab-tools tab-duration hideRepeated))
 	 (not (in-grid? tab-duration)))
      (transparent? tab-duration prev-tab-duration))
 
-    (if (getOption '(lute-tab tab-duration useGrids))
+    (if (getOption '(tab-tools tab-duration useGrids))
      (process-grids tab-duration prev-tab-duration grid translator context))
 
   )))
@@ -295,7 +306,10 @@
 	(set! (grouping-unit tab-duration) (/ (ly:moment-main (ly:context-property
 							       context 'measureLength))
 					    (car (ly:context-property context
-						  'timeSignatureFraction)))))))     
+						  'timeSignatureFraction))))))
+
+     ((kill-grid-event engraver event)
+       (set! (stop-gridline? grid) #t)))
 
      ((process-music translator)
       (begin
@@ -314,7 +328,7 @@
 
       ((note-column-interface engraver grob source-engraver)
        (begin
-	(if (getOption '(lute-tab tab-duration useGrids))
+	(if (getOption '(tab-tools tab-duration useGrids))
 	 (begin
 	  (if (stop-gridline? grid)
 	   (end-grid tab-duration grid engraver))
@@ -327,7 +341,7 @@
 	(ly:grob-set-object! (td-grob tab-duration) 'dots grob))))
 
      ((stop-translation-timestep translator)
-      (if (getOption '(lute-tab tab-duration useGrids))
+      (if (getOption '(tab-tools tab-duration useGrids))
        (begin
 	(if (start-gridline? grid)
 	 (begin
@@ -344,7 +358,7 @@
       )))
      
      ((finalize translator)
-      (if (getOption '(lute-tab tab-duration useGrids))
+      (if (getOption '(tab-tools tab-duration useGrids))
        (begin
 	(if (not (null? (lines grid)))
 	 (begin

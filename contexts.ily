@@ -41,7 +41,7 @@
     \override TabNoteHead.Y-offset = 
     #(lambda (grob)
       (let ((default (ly:staff-symbol-referencer::callback grob)))
-  	(+ default (* (getOption '(lute-tab raiseNoteHeads))
+  	(+ default (* (getOption '(tab-tools raiseNoteHeads))
 	   	      (ly:staff-symbol-staff-space grob)))))	
 
     stringTunings = \stringTuning <g, c f a d' g'>
