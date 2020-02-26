@@ -1,7 +1,9 @@
 # tab-tools
 
-*tab-tools* is a toolbox for typesetting lute tablature, but is currently only
-implemented for French style Renaissance tablature.
+*tab-tools* is a toolbox containing assorted tools for typesetting
+lute tablature. It is currently only implemented for French-style
+Renaissance tablature.
+
 This package is intended to be used with GNU LilyPond.
 It belongs to *openLilyLib*, LilyPond's community library system.
 Therefore getting and installing *tab-tools* is automatically handled by
