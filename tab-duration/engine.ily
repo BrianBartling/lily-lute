@@ -75,43 +75,44 @@ killGrid = #(make-music 'KillGridEvent)
       (grobs-in-grid grid))
      (set! (grobs-in-grid grid) '())))))
 
-	   #(define (raise-bound line tab-duration grid)
-	     (let* ((bound-details      (ly:grob-property line 'bound-details))
-		    (yraise             (cons 'Y 
-					 (/ (grid-slant tab-duration)
-					  (ly:staff-symbol-staff-space line))))
-		    (overshoot          (ly:grob-property line 'overshoot)))
+#(define (raise-bound line tab-duration grid)
+   (let* ((bound-details      (ly:grob-property line 'bound-details))
+	  (yraise             (cons 'Y 
+			       (/ (grid-slant tab-duration)
+				(ly:staff-symbol-staff-space line))))
+	  (overshoot-left     (assoc-get 'overshoot (assoc-get 'left bound-details)))
+	  (overshoot-right    (assoc-get 'overshoot (assoc-get 'right bound-details))))
 
-	      (begin
-	       (set! bound-details
-		(append-map 
-		 (lambda (x)
-		  (cond
-		   ((equal? (car x) 'right)
-		    (list
-		     (append-map
-		      (lambda (y)
-		       (cond
-			((and (pair? y) (equal? (car y) 'Y))
-			 (list yraise))
-			((and (pair? y) (equal? (car y) 'padding))
-			 (list (cons 'padding (* (cdr overshoot) -1))))
-			(else (list y))))
-		      x)))
-		   ((equal? (car x) 'left)
-		    (list
-		     (append-map
-		      (lambda (y)
-		       (cond
-			((and (pair? y) (equal? (car y) 'padding))
-			 (list (cons 'padding (* (car overshoot) -1))))
-			(else (list y))))
-		      x)))
-		   (else (list x))))
-		 bound-details))
+    (begin
+     (set! bound-details
+	(append-map 
+	 (lambda (x)
+	  (cond
+	   ((equal? (car x) 'right)
+	    (list
+	     (append-map
+	      (lambda (y)
+	       (cond
+		((and (pair? y) (equal? (car y) 'Y))
+		 (list yraise))
+		((and (pair? y) (equal? (car y) 'padding))
+		 (list (cons 'padding (* overshoot-left -1))))
+		(else (list y))))
+	      x)))
+	   ((equal? (car x) 'left)
+	    (list
+	     (append-map
+	      (lambda (y)
+	       (cond
+		((and (pair? y) (equal? (car y) 'padding))
+		 (list (cons 'padding (* overshoot-right -1))))
+		(else (list y))))
+	      x)))
+	   (else (list x))))
+	 bound-details))
 
-	       (ly:grob-set-property! line 'bound-details bound-details)
-	     )))
+     (ly:grob-set-property! line 'bound-details bound-details)
+   )))
 
 #(define (end-grid tab-duration grid context)
   (begin

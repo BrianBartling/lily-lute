@@ -66,12 +66,10 @@
        	   (set! note-column grob)))))
    
        ((stop-translation-timestep translator)
-         (if (and 
-        	    (not (null? col-line))
-        	    (not (null? ref-grobs)))
-        	(begin
-        	 (init-col-line context translator ref-grobs duration)
-       	 (set! col-line '()))))
-  
-     ))))
+         (if (and (not (null? col-line))
+        	  (not (null? ref-grobs)))
+              (begin
+               (init-col-line context translator ref-grobs duration)
+               (set! col-line '()))))
+      ))))
     

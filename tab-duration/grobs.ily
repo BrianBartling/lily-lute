@@ -6,7 +6,6 @@
 
 #(define-grob-property 'top-space number? "The amount of space at the top of the grid")
 #(define-grob-property 'grid-space number? "The amount of space between each gridline")
-#(define-grob-property 'overshoot pair? "how much the grid is extended to the left & right")
 
 %%%
 %%% Grob routines
@@ -106,10 +105,12 @@
     (bound-details . ((left . ((Y . 0)
 			       (padding . 0.0)
 			       (attach-dir . ,LEFT)
+			       (overshoot . 0.4)
 			     ))
 		      (right . ((Y . 0)
 				(padding . 0.0)
 				(attach-dir . ,RIGHT)
+				(overshoot . 0.4)
 			      ))
 		    ))
     (staff-padding . 0.8)
@@ -120,7 +121,6 @@
     ;; (extra-spacing-width . (-0.5 . 0.5))
     (top-space . 1.0)
     (grid-space . 1.0)
-    (overshoot . (0.4 . 0.4))
     (stencil . ,ly:line-spanner::print)
     (style . line)
     (vertical-skylines . ,grob::unpure-vertical-skylines-from-stencil)
