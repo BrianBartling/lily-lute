@@ -14,6 +14,7 @@
 \include   "col-line/engine.ily"
 \include   "tab-articulation/engine.ily"
 \include   "tab-duration/engine.ily"
+\include   "hold-line/engine.ily"
 
 \include   "markups.ily"
 \include   "contexts.ily"

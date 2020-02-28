@@ -22,6 +22,7 @@
     \consists #tab-duration-engraver
     \consists #col-line-engraver
     \consists #tab-articulation-engraver
+    \consists #hold-line-engraver
 
     tablatureFormat = #fret-letter-tablature-format
 
