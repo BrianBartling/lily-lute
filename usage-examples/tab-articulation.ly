@@ -12,7 +12,8 @@ m = {
   <d, d' fis'\arpAbove a'>2
 
   g'\arpAbove\index
-
+  
+  a\thumb
 }
 
 \paper {

@@ -33,7 +33,7 @@
 
     \override Fingering.direction = #DOWN
     \override Fingering.staff-padding = #'()
-    \override Fingering.padding = #0.5
+    \override Fingering.padding = #0.2
 
     \override Flag.style = #'default
     \override Flag.stencil = #old-straight-flag

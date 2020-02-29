@@ -20,7 +20,19 @@ shortenBarLine =
 %%% Fingering markup commands
 %%%
 
-#(define-markup-command (index layout props) ()
+#(define-markup-command (thumb-fng layout props) ()
+  #:properties ((height     0.78)
+  	        (thickness  0.15)
+		(blot        0.3))
+   "Draw a straight line for the thumb"
+   (let  ((height-interval      (cons 0 height))
+   	  (thickness-interval   (cons 0 thickness)))
+    (interpret-markup layout props
+     (markup #:filled-box thickness-interval
+     	     		  height-interval
+			  blot))))
+
+#(define-markup-command (index-fng layout props) ()
   #:properties ((radius  0.15)
                 (hoffset 0))
 
@@ -29,10 +41,10 @@ shortenBarLine =
    (markup #:hspace hoffset
    #:draw-circle radius 0 #t)))
 
-#(define-markup-command (middle layout props) ()
+#(define-markup-command (middle-fng layout props) ()
   #:properties ((radius      0.15)
 		(separation  -0.25)
-		(hoffset     0))
+		(hoffset     0.4))
   "Draw two dots for the middle finger."
   (interpret-markup layout props
    (markup #:hspace hoffset
@@ -40,8 +52,9 @@ shortenBarLine =
     #:hspace separation
     #:draw-circle radius 0 #t)))
 
-middle = \finger\markup\middle
-index = \finger\markup\index
+thumb = \finger\markup\thumb-fng
+index = \finger\markup\index-fng
+middle = \finger\markup\middle-fng
 
 colLine = #(make-music 'ColLineEvent)
 
