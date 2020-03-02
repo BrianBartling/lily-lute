@@ -58,13 +58,9 @@
 	(end-ev     (ly:make-stream-event (ly:make-event-class 'note-event) 
 		     (list (cons 'duration duration)))))
    (begin
-    (format #t "\nThis mom: ~a, Prev mom: ~a\n" (this-mom hold-line) (prev-mom hold-line))
     (map
      (lambda (x)
-      (format #t "x: ~a\n" x)
       (set-cdr! x (- (cdr x) (- (this-mom hold-line) (prev-mom hold-line))))
-      (format #t "This x: ~a\n" x)
-      (format #t "note-head-grobs: ~a\n" note-head-grobs)
       (if (and (<= (cdr x) 0)
       	   (not (null? note-head-grobs)))
        (begin
