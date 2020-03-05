@@ -56,13 +56,13 @@ killGrid = #(make-music 'KillGridEvent)
 %%% Misc functions
 %%%
 
-#(define (transparent? tab-duration prev-tab-duration)
+#(define (make-transparent tab-duration prev-tab-duration)
   (begin
    (if (and (!= (durlog prev-tab-duration) 0)
 	(=  (durlog prev-tab-duration) (durlog tab-duration))
 	(!= (ly:moment-main (m-pos tab-duration)) 0)
-	(in-grid? tab-duration)
-	(in-grid? prev-tab-duration))
+	(not (in-grid? tab-duration))
+	(not (in-grid? prev-tab-duration)))
     (ly:grob-set-property! (td-grob tab-duration) 'transparent #t)
     (ly:grob-set-property! (flag    tab-duration) 'transparent #t))))
 
@@ -276,7 +276,7 @@ killGrid = #(make-music 'KillGridEvent)
 
     (if (and (getOption '(tab-tools tab-duration hideRepeated))
 	 (not (in-grid? tab-duration)))
-     (transparent? tab-duration prev-tab-duration))
+     (make-transparent tab-duration prev-tab-duration))
 
     (if (getOption '(tab-tools tab-duration useGrids))
      (process-grids tab-duration prev-tab-duration grid translator context))
