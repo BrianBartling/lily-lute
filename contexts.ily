@@ -32,7 +32,6 @@
 
     \revert TextScript.stencil
 
-    \override Fingering.direction = #DOWN
     \override Fingering.staff-padding = #'()
     \override Fingering.padding = #0.5
 
@@ -46,7 +45,7 @@
 	   	      (ly:staff-symbol-staff-space grob)))))	
 
     stringTunings = \stringTuning <g, c f a d' g'>
-    additionalBassStrings = \stringTuning <d,>
+    additionalBassStrings = \stringTuning <d, f,>
 
     fretLabels = \markuplist {
       		   \label-glyph "luteFrenchFretA" \label-glyph "luteFrenchFretB"

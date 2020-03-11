@@ -69,6 +69,7 @@
       ((note-column-interface engraver grob source-engraver)
        (let ((nh-grobs (ly:grob-object grob 'note-heads)))
         (if (and (> which-grob -1)
+	    	 (not (null? nh-grobs))
 	         (> (ly:grob-array-length nh-grobs) 1))
 	 (begin
 	  (set! note-head 
