@@ -12,6 +12,7 @@
 \registerOption tab-tools.tab-duration.maxGrid        #4
 
 \registerOption tab-tools.hold-line.attachToClosest   ##t
+\registerOption tab-tools.hold-line.diapason-level    #-4.5
 
 %%%
 %%% Includes

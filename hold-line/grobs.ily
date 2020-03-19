@@ -12,7 +12,7 @@
 			       (attach-dir . ,RIGHT)
 			     ))
 		      (right . ((Y . 0)
-				(padding . 0.75)
+				(padding . 0.5)
 				(attach-dir . ,LEFT)
 			      ))
 		    ))
