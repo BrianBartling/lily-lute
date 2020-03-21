@@ -72,9 +72,8 @@ removeHoldLine = #(define-event-function () ()
      (set! (lines hold-line) (acons hl-grob (get-duration note-ev) (lines hold-line)))))))
 
 #(define (process-lines translator hold-line note-head-grobs duration)
-  (let ((lines-loc  '())
-	(end-ev     (ly:make-stream-event (ly:make-event-class 'note-event) 
-		     (list (cons 'duration duration)))))
+  (let ((lines-loc  '()))
+
    (begin
     (map
      (lambda (x)
@@ -87,13 +86,16 @@ removeHoldLine = #(define-event-function () ()
 	  (ly:grob-suicide! (car x))
    	  (set! (lines hold-line) (del-assoc x (lines hold-line))))
 	 (begin
-	  (end-hl-grob x hold-line translator end-ev)))
+	  (end-hl-grob x hold-line translator duration)))
         (ly:grob-set-object! (car x) 'timestep-cnt (+ cnt 1)))))
     (lines hold-line)))))
 
-#(define (end-hl-grob x hold-line translator end-ev)
+#(define (end-hl-grob x hold-line translator duration)
   (let ((grob         (car x))
-        (bound-grob  '()))
+        (bound-grob  '())
+	(end-ev       (ly:make-stream-event (ly:make-event-class 'note-event)
+	               (list (cons 'duration duration)))))
+
    (if (getOption '(tab-tools hold-line attachToClosest))
     (let ((closest-grob  '())
           (orig-sp        (ly:grob-staff-position grob)))
@@ -124,8 +126,8 @@ removeHoldLine = #(define-event-function () ()
 #(define (nullify-hold-line hold-line)
   (set! (mom (prev-hold-line hold-line)) (mom hold-line))
   (set! (note-column (prev-hold-line hold-line)) (note-column hold-line))
-  (set! (grobs (prev-hold-line hold-line)) (grobs hold-line))
-  (set! (lines (prev-hold-line hold-line)) (lines hold-line))
+  (if (not (null? (grobs hold-line)))
+   (set! (grobs (prev-hold-line hold-line)) (grobs hold-line)))
   (set! (grobs hold-line) '())
   (set! (adjust hold-line) '())
   (set! (remove? hold-line) #f))
@@ -227,8 +229,17 @@ removeHoldLine = #(define-event-function () ()
        (init-hold-line context translator hold-line note-evs note-head-grobs)
 
        ;;Prepare for next time step
+
        (nullify-hold-line hold-line)
        (set! note-evs '())
+
        (set! note-head-grobs '()))
+
+     ((finalize translator)
+       (map
+        (lambda (x)
+	 (if (>= (ly:grob-object (car x) 'timestep-cnt) 3)
+	  (end-hl-grob x hold-line translator duration)))
+        (lines hold-line)))
 
       ))))
