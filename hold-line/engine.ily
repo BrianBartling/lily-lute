@@ -27,17 +27,13 @@ removeHoldLine = #(define-event-function () ()
 %%%
 
 #(define-class <hold-line> ()
-  (this-mom           #:accessor this-mom
+  (mom                #:accessor mom
                       #:init-value       0)
-  (prev-mom           #:accessor prev-mom
-                      #:init-value       0)
-  (this-note-column   #:accessor this-note-column
+  (note-column        #:accessor note-column
   		      #:init-value     '())
-  (these-grobs        #:accessor these-grobs
+  (grobs              #:accessor grobs
                       #:init-value     '())
-  (prev-note-column   #:accessor prev-note-column
-                      #:init-value     '())
-  (prev-grobs         #:accessor prev-grobs
+  (prev-hold-line     #:accessor prev-hold-line
                       #:init-value     '())
   (adjust             #:accessor adjust
                       #:init-value     '())
@@ -83,7 +79,7 @@ removeHoldLine = #(define-event-function () ()
     (map
      (lambda (x)
       (let ((cnt  (ly:grob-object (car x) 'timestep-cnt)))
-       (set-cdr! x (- (cdr x) (- (this-mom hold-line) (prev-mom hold-line))))
+       (set-cdr! x (- (cdr x) (- (mom hold-line) (mom (prev-hold-line hold-line)))))
        (if (and (< (cdr x) 0)
                 (not (null? note-head-grobs)))
         (if (<= cnt 1)
@@ -111,12 +107,12 @@ removeHoldLine = #(define-event-function () ()
 	    (begin
              (ly:grob-set-property! y 'color red)
 	     (set! closest-grob y))))
-      (prev-grobs hold-line))
+      (grobs (prev-hold-line hold-line)))
      (set! bound-grob closest-grob)
      (if (set-bound? (round orig-sp) (round (ly:grob-staff-position bound-grob)))
       (ly:grob-set-nested-property! grob '(bound-details right Y)
        (- (ly:grob-property closest-grob 'Y-offset) (ly:grob-staff-position grob)))))
-    (set! bound-grob (prev-note-column hold-line)))
+    (set! bound-grob (note-column (prev-hold-line hold-line))))
    (ly:grob-set-property! bound-grob 'color blue)
    (ly:spanner-set-bound! grob RIGHT bound-grob)
    (let ((adjust-endpoint (ly:grob-object grob 'adjust-end)))
@@ -126,10 +122,11 @@ removeHoldLine = #(define-event-function () ()
    (ly:engraver-announce-end-grob translator grob end-ev)))
 
 #(define (nullify-hold-line hold-line)
-  (set! (prev-mom hold-line) (this-mom hold-line))
-  (set! (prev-note-column hold-line) (this-note-column hold-line))
-  (set! (prev-grobs hold-line) (these-grobs hold-line))
-  (set! (these-grobs hold-line) '())
+  (set! (mom (prev-hold-line hold-line)) (mom hold-line))
+  (set! (note-column (prev-hold-line hold-line)) (note-column hold-line))
+  (set! (grobs (prev-hold-line hold-line)) (grobs hold-line))
+  (set! (lines (prev-hold-line hold-line)) (lines hold-line))
+  (set! (grobs hold-line) '())
   (set! (adjust hold-line) '())
   (set! (remove? hold-line) #f))
 
@@ -188,12 +185,15 @@ removeHoldLine = #(define-event-function () ()
 #(define-public hold-line-engraver
   (lambda (context)
 
-   (let ((hold-line           (make <hold-line>))
-         (note-evs           '())
-	 (note-head-grobs    '())
-         (duration             0))
+   (let ((hold-line                    (make <hold-line>))
+         (note-evs                    '())
+         (note-head-grobs             '())
+         (duration                      0))
 
     (make-engraver
+    
+    ((initialize translator)
+     (set! (prev-hold-line hold-line) (make <hold-line>)))
 
      (listeners
       ((note-event engraver event)
@@ -217,12 +217,12 @@ removeHoldLine = #(define-event-function () ()
                (list-note-heads
                 (if (null? note-heads)
 		 '() (ly:grob-array->list note-heads))))
-         (set! (this-note-column hold-line) grob)
-         (set! (these-grobs hold-line) 
-          (append (these-grobs hold-line) list-note-heads)))))
+         (set! (note-column hold-line) grob)
+         (set! (grobs hold-line) 
+          (append (grobs hold-line) list-note-heads)))))
 
      ((stop-translation-timestep translator)
-       (set! (this-mom hold-line) (ly:moment-main (ly:context-now context)))
+       (set! (mom hold-line) (ly:moment-main (ly:context-now context)))
        (process-lines translator hold-line note-head-grobs duration)
        (init-hold-line context translator hold-line note-evs note-head-grobs)
 
@@ -230,4 +230,5 @@ removeHoldLine = #(define-event-function () ()
        (nullify-hold-line hold-line)
        (set! note-evs '())
        (set! note-head-grobs '()))
+
       ))))
