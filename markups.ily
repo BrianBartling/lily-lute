@@ -52,8 +52,9 @@ shortenBarLine =
     #:hspace separation
     #:draw-circle radius 0 #t)))
 
-middle = _\finger\markup\middle
-index = _\finger\markup\index
+thumb = _\finger\markup\thumb-fng
+index = _\finger\markup\index-fng
+middle = _\finger\markup\middle-fng
 
 colLine = #(make-music 'ColLineEvent)
 
