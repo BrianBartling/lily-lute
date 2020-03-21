@@ -46,7 +46,6 @@
 
    (let ((col-line       '())
 	 (ref-grobs      '())
-	 (note-column    '())
 	 (duration        0))
 
     (make-engraver
@@ -59,17 +58,16 @@
       	(set! col-line event)))
  
        (acknowledgers
-        ((note-column-interface engraver grob source-engraver)
-       	 (if (not (null? col-line))
-       	  (begin
-       	   (set! ref-grobs (extract-grobs grob))
-       	   (set! note-column grob)))))
+	((note-head-interface engraver grob source-engraver)
+	 (set! ref-grobs (append ref-grobs (list grob)))))
    
        ((stop-translation-timestep translator)
          (if (and (not (null? col-line))
         	  (not (null? ref-grobs)))
               (begin
+	       (set! ref-grobs (cons (car ref-grobs) (cadr ref-grobs)))
                (init-col-line context translator ref-grobs duration)
-               (set! col-line '()))))
+               (set! col-line '())))
+	(set! ref-grobs '()))
       ))))
     
