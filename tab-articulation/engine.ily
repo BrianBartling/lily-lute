@@ -30,6 +30,7 @@
   (lambda (context)
 
    (let ((s-event            '())
+         (nh-grobs           '())    
 	 (note-head          '())
 	 (articulation-type  '())
 	 (font-size          '())
@@ -65,28 +66,26 @@
 
      (acknowledgers
       ((note-head-interface engraver grob source-engraver)
-       (set! note-head grob))
-      ((note-column-interface engraver grob source-engraver)
-       (let ((nh-grobs (ly:grob-object grob 'note-heads)))
-        (if (and (> which-grob -1)
-	    	 (not (null? nh-grobs))
-	         (> (ly:grob-array-length nh-grobs) 1))
-	 (begin
-	  (set! note-head 
-	   (list-ref 
-	    (ly:grob-array->list (ly:grob-object grob 'note-heads))
-	    which-grob)))))))
+       (set! note-head grob)      
+       (set! nh-grobs (append nh-grobs (list grob)))))
 
      ((stop-translation-timestep translator)
-      (begin
+      (if (and (> which-grob -1)
+               (not (null? nh-grobs))
+      	       (> (length nh-grobs) 1))
+        (set! note-head (list-ref nh-grobs which-grob)))
+
        (if (and (not (null? note-head))
             (not (null? articulation-type)))
-	(begin
-	 (init-tab-articulation translator s-event note-head articulation-type font-size padding)))
+	 (init-tab-articulation 
+           translator s-event note-head articulation-type font-size padding))
+
        (set! s-event           '())
+       (set! nh-grobs          '())       
        (set! articulation-type '())
        (set! font-size         '())
        (set! padding           '())
        (set! nev-count          -1)
-       (set! which-grob         -1)))
+       (set! which-grob         -1))
+
    ))))
