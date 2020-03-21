@@ -29,7 +29,7 @@ killGrid = #(make-music 'KillGridEvent)
   (grouping-unit        #:accessor grouping-unit)
   (td-grob              #:accessor td-grob)
   (flag                 #:accessor flag)
-  (note-event           #:accessor note-event
+  (rhythmic-event       #:accessor rhythmic-event
   			#:init-value '())
   (measure-position     #:accessor m-pos)
   (print-flag?          #:accessor print-flag?
@@ -123,7 +123,7 @@ killGrid = #(make-music 'KillGridEvent)
 	 (begin
 	  (raise-bound x tab-duration grid)
 	  (ly:spanner-set-bound! x RIGHT (td-grob tab-duration))
-	  (ly:engraver-announce-end-grob context x (note-event tab-duration))))
+	  (ly:engraver-announce-end-grob context x (rhythmic-event tab-duration))))
     (lines grid))
 
    (remove-flags tab-duration grid)
@@ -136,7 +136,7 @@ killGrid = #(make-music 'KillGridEvent)
   (lambda (i tab-duration grid context span delta yoffset)
    (if (not (= i 0))
     (begin
-     (set! span (ly:engraver-make-grob context 'TabGrid (note-event tab-duration)))
+     (set! span (ly:engraver-make-grob context 'TabGrid (rhythmic-event tab-duration)))
      (ly:grob-set-parent! span Y (td-grob tab-duration))
 
      (set! yoffset (- delta (ly:grob-property span 'top-space) 
@@ -250,7 +250,7 @@ killGrid = #(make-music 'KillGridEvent)
 
 #(define (init-tab-duration tab-duration prev-tab-duration grid translator context)
   (let ((ts-frac        (ly:context-property context 'timeSignatureFraction))
-	(td-event       (ly:make-stream-event (ly:make-event-class 'note-event)
+	(td-event       (ly:make-stream-event (ly:make-event-class 'rhythmic-event)
 			 (list (cons 'duration (duration tab-duration))))))
 
    (begin
@@ -298,21 +298,21 @@ killGrid = #(make-music 'KillGridEvent)
     (make-engraver
 
      (listeners
-      ((note-event engraver event)
-        (let* ((note-duration  (ly:event-property event 'duration))
-	       (note-durlog    (+ (ly:duration-log note-duration) 1))
-	       (note-durlength (ly:moment-main (ly:duration-length note-duration)))
-	       (note-grouping  (/ (ly:moment-main (ly:context-property context 'measureLength))
+      ((rhythmic-event engraver event)
+        (let* ((rhythmic-duration  (ly:event-property event 'duration))
+	       (rhythmic-durlog    (+ (ly:duration-log rhythmic-duration) 1))
+	       (rhythmic-durlength (ly:moment-main (ly:duration-length rhythmic-duration)))
+	       (rhythmic-grouping  (/ (ly:moment-main (ly:context-property context 'measureLength))
 	       			  (car (ly:context-property context 'timeSignatureFraction)))))
 
-        (if (or (null? (note-event tab-duration))
-	        (< note-durlength (durlength tab-duration)))
+        (if (or (null? (rhythmic-event tab-duration))
+	        (< rhythmic-durlength (durlength tab-duration)))
          (begin
-          (set! (note-event tab-duration)    event)
-	  (set! (duration   tab-duration)    note-duration)
-	  (set! (durlog     tab-duration)    note-durlog)
-	  (set! (durlength  tab-duration)    note-durlength)
-	  (set! (grouping-unit tab-duration) note-grouping)))))
+          (set! (rhythmic-event tab-duration)    event)
+	  (set! (duration   tab-duration)    rhythmic-duration)
+	  (set! (durlog     tab-duration)    rhythmic-durlog)
+	  (set! (durlength  tab-duration)    rhythmic-durlength)
+	  (set! (grouping-unit tab-duration) rhythmic-grouping)))))
 
      ((kill-grid-event engraver event)
        (set! (stop-gridline? grid) #t)))
@@ -357,7 +357,7 @@ killGrid = #(make-music 'KillGridEvent)
 			  (car x) (slot-ref tab-duration (car x)))) 
 	 (class-slots <tab-duration>))
 
-	(set! (note-event tab-duration) '())
+	(set! (rhythmic-event tab-duration) '())
       )))
      
      ((finalize translator)
