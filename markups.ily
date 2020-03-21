@@ -52,9 +52,10 @@ shortenBarLine =
     #:hspace separation
     #:draw-circle radius 0 #t)))
 
-thumb = \finger\markup\thumb-fng
-index = \finger\markup\index-fng
-middle = \finger\markup\middle-fng
+=======
+middle = _\finger\markup\middle
+index = _\finger\markup\index
+>>>>>>> hold-line
 
 colLine = #(make-music 'ColLineEvent)
 
@@ -76,3 +77,8 @@ arpAbove = #(make-music 'TabArticulationEvent
 	     'articulation-type "luteFrenchAppoggiaturaAbove"	     
 	     'padding -0.58
 	     'font-size 0)
+mordUp   = #(make-music 'TabArticulationEvent
+	     'articulation-type "luteFrenchMordentUpper"
+	     'padding -0.2
+	     'font-size -7
+	     )
