@@ -30,10 +30,8 @@
     \omit TimeSignature
     \omit Arpeggio
 
+    \revert Script.stencil
     \revert TextScript.stencil
-
-    \override Fingering.staff-padding = #'()
-    \override Fingering.padding = #0.2
 
     \override Flag.style = #'default
     \override Flag.stencil = #old-straight-flag

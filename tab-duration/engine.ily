@@ -351,14 +351,14 @@ killGrid = #(make-music 'KillGridEvent)
 	  (set! (start-gridline? grid) #f)))
 
 	(if (stop-gridline? grid)
-	 (set! (stop-gridline? grid) #f))
+	 (set! (stop-gridline? grid) #f))))
 
 	(map (lambda (x) (slot-set! prev-tab-duration 
 			  (car x) (slot-ref tab-duration (car x)))) 
 	 (class-slots <tab-duration>))
 
 	(set! (rhythmic-event tab-duration) '())
-      )))
+      )
      
      ((finalize translator)
       (if (getOption '(tab-tools tab-duration useGrids))

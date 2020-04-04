@@ -12,6 +12,32 @@
 %%%							     
 
 #(define (tab-duration::print me)
+  (cond 
+   ((getOption '(tab-tools tab-duration useFlags))
+     (flag-style me))
+   ((getOption '(tab-tools tab-duration useNoteHeads))
+     (note-head-style me))))
+
+#(define (note-head-style me)
+  (let* ((durlog         (- (ly:grob-property me 'duration-log) 1))
+         (dots           (ly:grob-object me 'dots))
+         (dot-count      0)
+         (font-size      (ly:grob-property me 'font-size))
+         (left-padding   (ly:grob-property me 'left-padding))
+         (right-padding  (ly:grob-property me 'right-padding))
+         (staff-padding  (ly:grob-property me 'staff-padding)))
+
+  (if (not (null? dots))
+   (set! dot-count (ly:grob-property dots 'dot-count)))
+
+  (grob-interpret-markup me
+   (markup #:fontsize font-size
+           #:hspace left-padding
+           #:note-by-number durlog dot-count UP
+           #:hspace right-padding
+           #:vspace staff-padding))))
+
+#(define (flag-style me)
   (let* ((y1            (ly:grob-property me 'stem-begin-position))
 	 (y2            (+ (ly:grob-property me 'length) y1))
 	 (half-space    (* (ly:staff-symbol-staff-space me) 0.5))
@@ -82,11 +108,14 @@
     (dot-position . (4 . 0.5))
     (dot-separation . 0.5)
     (thickness . 2.0)
+    (font-size . -1)
+    (left-padding . -0.5)
+    (right-padding . 0)
     (direction . ,UP)
     (self-alignment-X . ,CENTER)
     (extra-spacing-width . (-1 . 1))
     (outside-staff-horizontal-padding . 0.1)
-    (staff-padding . 5.0)
+    (staff-padding . 1.75)
     (flag-padding . (0.15 . -0.025))
     (outside-staff-priority . 750)
     (X-align-on-main-noteheads . #t)
