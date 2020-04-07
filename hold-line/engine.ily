@@ -37,6 +37,10 @@ removeHoldLine = #(define-event-function () ()
                       #:init-value     '())
   (adjust             #:accessor adjust
                       #:init-value     '())
+  (ta-event           #:accessor ta-event
+                      #:init-value     '())
+  (fng-grob           #:accessor fng-grob
+                      #:init-value     '())
   (remove?            #:accessor remove?
                       #:init-value     #f)
   (lines              #:accessor lines
@@ -69,7 +73,7 @@ removeHoldLine = #(define-event-function () ()
       (begin     
        (adjust-hl hl-grob (car (adjust hold-line)) 'left)
        (ly:grob-set-object! hl-grob 'adjust-end (cdr (adjust hold-line)))))
-     (set! (lines hold-line) (acons hl-grob (get-duration note-ev) (lines hold-line)))))))
+     (set! (lines hold-line) (acons hl-grob (get-duration note-ev) (lines hold-line)))))))   
 
 #(define (process-lines translator hold-line note-head-grobs duration)
   (let ((lines-loc  '()))
@@ -110,24 +114,23 @@ removeHoldLine = #(define-event-function () ()
              (ly:grob-set-property! y 'color red)
 	     (set! closest-grob y))))
       (grobs (prev-hold-line hold-line)))
-     (set! bound-grob closest-grob)
-     (if (set-bound? (round orig-sp) (round (ly:grob-staff-position bound-grob)))
-      (ly:grob-set-nested-property! grob '(bound-details right Y)
-       (- (ly:grob-property closest-grob 'Y-offset) (ly:grob-staff-position grob)))))
+     (set! bound-grob closest-grob))
     (set! bound-grob (note-column (prev-hold-line hold-line))))
    (ly:grob-set-property! bound-grob 'color blue)
    (ly:spanner-set-bound! grob RIGHT bound-grob)
-   (let ((adjust-endpoint (ly:grob-object grob 'adjust-end)))
-    (if (not (null? adjust-endpoint))
-      (adjust-hl grob adjust-endpoint 'right)))
+   (maybe-adjust-bound grob bound-grob hold-line)
    (set! (lines hold-line) (del-assoc x (lines hold-line)))
    (ly:engraver-announce-end-grob translator grob end-ev)))
 
 #(define (nullify-hold-line hold-line)
   (set! (mom (prev-hold-line hold-line)) (mom hold-line))
   (set! (note-column (prev-hold-line hold-line)) (note-column hold-line))
+  (set! (ta-event (prev-hold-line hold-line)) (ta-event hold-line))
+  (set! (fng-grob (prev-hold-line hold-line)) (fng-grob hold-line))
   (if (not (null? (grobs hold-line)))
    (set! (grobs (prev-hold-line hold-line)) (grobs hold-line)))
+  (set! (ta-event hold-line) '())
+  (set! (fng-grob hold-line) '())
   (set! (grobs hold-line) '())
   (set! (adjust hold-line) '())
   (set! (remove? hold-line) #f))
@@ -135,6 +138,52 @@ removeHoldLine = #(define-event-function () ()
 %%%
 %%% Misc functions
 %%%
+
+#(define (maybe-adjust-bound grob right-bound hold-line)
+   ;;; Bound Adjustment
+   ;;; If there are more than 2 staff spaces above or below the
+   ;;; source & target notehead, attach the grob above or below the note,
+   ;;; respectively.
+   ;;; If there is a TabArticulation grob attached to the note head and
+   ;;; the source & target grobs are not on the same staff line, attach
+   ;;; above/below the target grob.
+   ;;; If there is a Fingering grob, adjust for that
+  (ly:grob-set-property! grob 'color red)
+  (ly:grob-set-property! right-bound 'color green)
+  (ly:grob-set-property! (ly:spanner-bound grob LEFT) 'color blue)
+  (let*  ((left-bound        (ly:spanner-bound grob LEFT))
+          (right-staff-space (ly:grob-staff-position right-bound))
+	  (left-staff-space  (ly:grob-staff-position left-bound))
+          (distance          (abs (- right-staff-space left-staff-space)))
+          (right-offset      (ly:grob-property right-bound 'Y-offset))
+          (right-extent      (abs (- (cdr (ly:grob-property right-bound 'Y-extent))
+                                     (car (ly:grob-property right-bound 'Y-extent))))))
+
+   (if (or (not (null? (ta-event hold-line)))
+           (> distance 2))
+    (begin
+     (ly:grob-set-nested-property! grob '(bound-details right attach-dir) RIGHT)
+     (if (> right-staff-space left-staff-space)
+      (ly:grob-set-nested-property! grob '(bound-details right Y) (- right-offset (* right-extent 0.5)))
+      (ly:grob-set-nested-property! grob '(bound-details right Y) (+ right-offset (* right-extent 0.5))))))
+
+   (format #t "right-staff-space: ~a, left-staff-space: ~a, fng-grob: ~a\n" right-staff-space left-staff-space (fng-grob (prev-hold-line hold-line)))
+
+   (if (and (> right-staff-space left-staff-space)
+            (not (null? (fng-grob (prev-hold-line hold-line)))))
+    (let  ((fng-extent     (* (abs 
+                               (- (cdr 
+                                   (ly:grob-property (fng-grob (prev-hold-line hold-line)) 'Y-extent))
+                                  (car 
+                                   (ly:grob-property (fng-grob (prev-hold-line hold-line)) 'Y-extent)))) 1.5))
+           (current-offset '()))
+     (if (not (null? (grob-nested-property grob '(bound-details right Y))))
+      (set! current-offset (grob-nested-property grob '(bound-details right Y)))
+      (set! current-offset (* 1.5 right-extent)))
+     (ly:grob-set-nested-property! grob '(bound-details right Y)
+      (- current-offset fng-extent))))
+
+))
 
 #(define (adjust-hl grob value endpoint)
   (let* ((padding-list    (list 'bound-details endpoint 'padding))
@@ -209,7 +258,10 @@ removeHoldLine = #(define-event-function () ()
 	 ((equal? event-type 'adjust-endpoints)
 	  (set! (adjust hold-line) (ly:event-property event 'value)))
          ((equal? event-type 'remove)
-	  (set! (remove? hold-line) #t))))))
+	  (set! (remove? hold-line) #t)))))
+      ((tab-articulation-event engraver event)
+        (format #t "Listening to tab-articulation-event.\n")
+	(set! (ta-event hold-line) event)))
 
      (acknowledgers
       ((tab-note-head-interface engraver grob source-engraver)
@@ -221,7 +273,10 @@ removeHoldLine = #(define-event-function () ()
 		 '() (ly:grob-array->list note-heads))))
          (set! (note-column hold-line) grob)
          (set! (grobs hold-line) 
-          (append (grobs hold-line) list-note-heads)))))
+          (append (grobs hold-line) list-note-heads))))
+      ((finger-interface engraver grob source-engraver)
+        (format #t "Acknowledging finger event.\n")
+	(set! (fng-grob hold-line) grob)))
 
      ((stop-translation-timestep translator)
        (set! (mom hold-line) (ly:moment-main (ly:context-now context)))
