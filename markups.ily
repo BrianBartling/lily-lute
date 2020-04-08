@@ -59,8 +59,8 @@ index = -\tweak staff-padding #'()
         -\tweak padding #0.2
         _\finger\markup\index-fng
 middle = -\tweak staff-padding #'()
-        -\tweak padding #0.2
-        _\finger\markup\middle-fng
+         -\tweak padding #0.2
+         _\finger\markup\middle-fng
 
 colLine = #(make-music 'ColLineEvent)
 

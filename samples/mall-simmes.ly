@@ -15,21 +15,21 @@ m =  { \time 4/4
 
        << { g2\mordUp } \\ { <g, d' g'>4. a'8\index\mordUp } >> << { g2 } \\ { <d' bes'>8. a'16\index g'8\middle bes'\index } >> 
        <d, a d' a'>8.\arpAbove bes'16\index a'8\middle\arpAbove g'\index fis' e'\index d' d''\index
-       << { a4\adjustEndpoints #'((0 . 0) . (0 . .25)) } \\ { c''8\arpAbove d''\index } >>  << { g4 } \\ { bes'8 c''\index } >> << { f4 } \\ { a'8\arpAbove bes'\index } >> << { ees4 } \\ { g'8 a'\index } >>
+       << { a4 } \\ { c''8\arpAbove d''\index } >>  << { g4 } \\ { bes'8 c''\index } >> << { f4 } \\ { a'8\arpAbove bes'\index } >> << { ees4 } \\ { g'8 a'\index } >>
        << { d2 } \\ { <a fis'>4 d'\index\arpAbove } >> d,4 g'8\middle a'\index
-       bes'\middle << { g8~ g4\adjustEndpoints #'((-2.5 . 1.25) . (-0.75 . -1)) } \\ { r8 d'\middle g'\index } >> a'\middle\arpAbove f8 a d'\index
+       bes'\middle << { g8~ g4 } \\ { r8 d'\middle g'\index } >> a'\middle\arpAbove f8 a d'\index
        c'\middle ees d bes\index <c a\arpAbove> bes\index g4
-       d'8\middle\arpAbove d g'\middle\arpAbove bes, e'\middle\arpAbove c << { fis'4\middle\adjustEndpoints #'((0 . 0) . (3 . -3.5)) } \\ { r8 d } >>
+       d'8\middle\arpAbove d g'\middle\arpAbove bes, e'\middle\arpAbove c << { fis'4\middle } \\ { r8 d } >>
        <b\arpAbove d' g'>8 g g, c'\index <g, b\arpAbove d' g'>2
        \bar "||"
 
-       << { bes,2\adjustEndpoints #'((0 . 0) . (0 . -1)) } \\ { <bes d' f' bes'>8. c''16\index d''4 } >> <f c' f' a'>8. bes'16 c''4
+       << { bes,2 } \\ { <bes d' f' bes'>8. c''16\index d''4 } >> <f c' f' a'>8. bes'16 c''4
        << { g2 } \\ { <d'\mordUp bes'>4 a'8\middle\arpAbove g'\index } >> << { d2 } \\ { <a fis'>4 d'\index } >>
        << { bes,2 } \\ { bes8.\arpAbove c'16\index d'4\middle } >> <f, f a\arpAbove>8. bes16\index c4\middle
        <g, bes\arpAbove>4 a8\middle g\index <d fis\mordUp a d'>4 d,
        <g, g\mordUp>8. a16\index bes8 c'\index d'\middle bes\index g4\arpAbove
        <g, g bes d'>8. a,16 bes,8 c ees bes, g,4
-       << { bes,2.\adjustEndpoints #'((0 . 0) . (-0.75 . -2)) } \\ { bes8.\arpAbove c'16\index d'8 ees'\index f' d'\index } >> bes4\arpAbove
+       << { bes,2. } \\ { bes8.\arpAbove c'16\index d'8 ees'\index f' d'\index } >> bes4\arpAbove
        <bes, f bes d'>8. c16\index d8 ees <f f'> d bes,4
        <g, g\mordUp d' g'>2 <g d' bes'\mordUp>
        <d, a d' a'\arpAbove>4. g'8\index fis\middle e'\index d'\middle bes,

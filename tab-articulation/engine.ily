@@ -49,7 +49,7 @@
         (if (not (null? articulation-list))
 	 (begin
 	  (set! articulation (ly:event-property (car articulation-list) 'music-cause))
-          (if (eq? (ly:music-property articulation 'name)
+          (if (equal? (ly:music-property articulation 'name)
                'TabArticulationEvent)
 	   (begin
 	    (set! which-grob nev-count)

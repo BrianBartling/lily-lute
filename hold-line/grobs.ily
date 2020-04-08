@@ -7,11 +7,11 @@
 #(add-grob-definition 'HoldLine
   `(
     (after-line-breaking . ,ly:spanner::kill-zero-spanned-time)
-    (bound-details . ((left . ((Y . 0)
+    (bound-details . ((left . (;(Y . ,side-position-interface::y-aligned-side)
 			       (padding . 0.2)
 			       (attach-dir . ,RIGHT)
 			     ))
-		      (right . ((Y . 0)
+		      (right . (;(Y . 3.5)
 				(padding . 0.5)
 				(attach-dir . ,LEFT)
 			      ))
@@ -24,6 +24,9 @@
     (style . line)
     (X-extent . #f)
     (Y-extent . #f)
+    (Y-offset . ,side-position-interface::y-aligned-side)
+    (direction . ,DOWN)
+    (side-axis . ,Y)
     (meta . ((class . Spanner)
 	     (interfaces . (line-interface
 			    line-spanner-interface

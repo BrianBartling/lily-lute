@@ -14,7 +14,8 @@
 \registerOption tab-tools.tab-duration.maxGrid        #4
 
 \registerOption tab-tools.hold-line.attachToClosest   ##t
-\registerOption tab-tools.hold-line.diapason-level    #-4.5
+\registerOption tab-tools.hold-line.flatLines         ##f
+\registerOption tab-tools.hold-line.diapasonLevel     #-4.5
 
 %%%
 %%% Includes
@@ -24,7 +25,6 @@
 
 \include   "col-line/engine.ily"
 \include   "tab-articulation/engine.ily"
-\include   "tab-fingering/engine.ily"
 \include   "tab-duration/engine.ily"
 \include   "hold-line/engine.ily"
 
