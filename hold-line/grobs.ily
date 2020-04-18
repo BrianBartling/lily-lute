@@ -6,13 +6,10 @@
 
 #(add-grob-definition 'HoldLine
   `(
-    (after-line-breaking . ,ly:spanner::kill-zero-spanned-time)
-    (bound-details . ((left . (;(Y . ,side-position-interface::y-aligned-side)
-			       (padding . 0.2)
+    (bound-details . ((left . ((padding . 0.2)
 			       (attach-dir . ,RIGHT)
 			     ))
-		      (right . (;(Y . 3.5)
-				(padding . 0.5)
+		      (right . ((padding . 0.5)
 				(attach-dir . ,LEFT)
 			      ))
 		    ))
