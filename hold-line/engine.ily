@@ -101,31 +101,35 @@ removeHoldLine = #(define-event-function () ()
 	               (list (cons 'duration duration)))))
 
    (if (getOption '(tab-tools hold-line attachToClosest))
-    (let ((closest-grob  '())
-          (orig-sp        (ly:grob-staff-position grob)))
+    (let* ((closest-grob  '())
+           (left-grob      (ly:spanner-bound grob LEFT))
+           (orig-sp        (ly:grob-staff-position left-grob)))
      (map (lambda (y)
            (if (null? closest-grob)
 	    (set! closest-grob y)
 	    (begin
-                 (round (ly:grob-staff-position closest-grob))))
 	    (if (closer-to-zero? (round orig-sp) (round (ly:grob-staff-position y))
                  (round (ly:grob-staff-position closest-grob)))
 	    (begin
              (ly:grob-set-property! y 'color red)
-	     (set! closest-grob y))))
+	     (set! closest-grob y))))))
       (grobs (prev-hold-line hold-line)))
      (set! bound-grob closest-grob))
     (set! bound-grob (note-column (prev-hold-line hold-line))))
    (ly:grob-set-property! bound-grob 'color blue)
    (ly:spanner-set-bound! grob RIGHT bound-grob)
    (if (getOption '(tab-tools hold-line flatLines))
-    (ly:grob-set-nested-property! grob '(bound-details right Y) 0)
+    (flatten-line grob)
     (maybe-adjust-bound grob bound-grob hold-line))
    (let ((adjust-endpoint (ly:grob-object grob 'adjust-end)))
     (if (not (null? adjust-endpoint))
      (adjust-hl grob adjust-endpoint 'right)))
    (set! (lines hold-line) (del-assoc x (lines hold-line)))
    (ly:engraver-announce-end-grob translator grob end-ev)))
+
+#(define (flatten-line grob)
+  (let ((left-Y-offset (ly:grob-property (ly:spanner-bound grob LEFT) 'Y-offset)))
+   (ly:grob-set-nested-property! grob '(bound-details right Y) left-Y-offset)))
 
 #(define (nullify-hold-line hold-line)
   (set! (mom (prev-hold-line hold-line)) (mom hold-line))
@@ -166,14 +170,15 @@ removeHoldLine = #(define-event-function () ()
           (right-extent      (abs (- (cdr (ly:grob-property right-bound 'Y-extent))
                                      (car (ly:grob-property right-bound 'Y-extent))))))
 
-   (if (and (not (null? (ta-event (prev-hold-line hold-line))))
-            (!= distance 0))
-    (begin
-     (ly:grob-set-nested-property! grob '(bound-details right attach-dir) LEFT)
-     (if (> right-staff-space left-staff-space)
-      (ly:grob-set-nested-property! grob '(bound-details right Y) (+ (- right-offset (* right-extent 0.5) left-offset)))
-      (ly:grob-set-nested-property! grob '(bound-details right Y) (- (+ right-offset (* right-extent 0.75)) left-offset)))))
-
+    (if (and (not (null? (ta-event (prev-hold-line hold-line))))
+             (!= distance 0)
+             (> (abs (- right-staff-space left-staff-space)) 2.01))
+     (begin
+      (ly:grob-set-nested-property! grob '(bound-details right attach-dir) LEFT)
+      (if (> right-staff-space left-staff-space)
+       (ly:grob-set-nested-property! grob '(bound-details right Y) (+ (- right-offset (* right-extent 0.5) left-offset)))
+       (ly:grob-set-nested-property! grob '(bound-details right Y) (- (+ right-offset (* right-extent 0.75)) left-offset)))))
+ 
    (if (and (> right-staff-space left-staff-space)
             (not (null? (fng-grob (prev-hold-line hold-line)))))
     (let  ((fng-extent     (* (abs 
@@ -189,10 +194,9 @@ removeHoldLine = #(define-event-function () ()
        (- (- current-offset fng-extent) left-offset))
 ))
 
-  (if (< right-staff-space (getOption '(tab-tools hold-line diapasonLevel)))
-   (let ((left-Y-offset  (ly:grob-property (ly:spanner-bound grob LEFT) 'Y-offset)))
-    (ly:grob-set-nested-property! grob '(bound-details right Y) left-Y-offset))
-    (ly:grob-set-nested-property! grob '(bound-details right attach-dir) LEFT))
+   (if (< right-staff-space (getOption '(tab-tools hold-line diapasonLevel)))
+     (flatten-line grob)
+     (ly:grob-set-nested-property! grob '(bound-details right attach-dir) LEFT))
 ))
 
 #(define (adjust-hl grob value endpoint)
@@ -223,13 +227,6 @@ removeHoldLine = #(define-event-function () ()
    (cond ((= dist-test dist-closest) (< test-sp closest-sp))
 	 ((< dist-test dist-closest) #t)
 	 (else #f))))
-
-#(define (set-bound? orig-sp bound-grob-sp)
-  ;; Attach the end of the hold line to its closest grob, only if:	 
-  ;;   - the line isn't flat, i.e. both grobs are at the same staff position
-  ;;   - the resulting note head isn't below the staff, i.e. a diapason
-  (and (not (= (- (abs orig-sp) (abs bound-grob-sp)) 0))
-       (not (< bound-grob-sp (getOption '(tab-tools hold-line diapasonLevel))))))
 
 #(define (get-duration event)
   (ly:moment-main 
