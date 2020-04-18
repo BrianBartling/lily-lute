@@ -190,10 +190,9 @@ removeHoldLine = #(define-event-function () ()
 ))
 
   (if (< right-staff-space (getOption '(tab-tools hold-line diapasonLevel)))
-   (begin
-    (ly:grob-set-nested-property! grob '(bound-details right Y) 0))
+   (let ((left-Y-offset  (ly:grob-property (ly:spanner-bound grob LEFT) 'Y-offset)))
+    (ly:grob-set-nested-property! grob '(bound-details right Y) left-Y-offset))
     (ly:grob-set-nested-property! grob '(bound-details right attach-dir) LEFT))
-
 ))
 
 #(define (adjust-hl grob value endpoint)
