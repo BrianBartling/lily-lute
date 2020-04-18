@@ -19,7 +19,9 @@
      (note-head-style me))))
 
 #(define (note-head-style me)
-  (let* ((durlog         (- (ly:grob-property me 'duration-log) 1))
+  (let* ((mol           '())
+         (grob-markup   '())
+         (durlog         (- (ly:grob-property me 'duration-log) 1))
          (dots           (ly:grob-object me 'dots))
          (dot-count      0)
          (font-size      (ly:grob-property me 'font-size))
@@ -30,12 +32,16 @@
   (if (not (null? dots))
    (set! dot-count (ly:grob-property dots 'dot-count)))
 
-  (grob-interpret-markup me
-   (markup #:fontsize font-size
-           #:hspace left-padding
-           #:note-by-number durlog dot-count UP
-           #:hspace right-padding
-           #:vspace staff-padding))))
+  (set! grob-markup (grob-interpret-markup me
+                     (markup #:fontsize font-size
+                              #:hspace left-padding
+                              #:note-by-number durlog dot-count UP
+                              #:hspace right-padding
+                              #:vspace staff-padding)))
+
+  (set! mol (ly:make-stencil (ly:stencil-expr grob-markup) '(0 . 0) '(0 . 0)))
+
+  mol))
 
 #(define (flag-style me)
   (let* ((y1            (ly:grob-property me 'stem-begin-position))
