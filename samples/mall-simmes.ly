@@ -54,7 +54,7 @@ m =  { \time 4/4
 
 \paper {
   top-margin = #0
-  system-system-spacing = #'((basic-distance . 0.25) (padding . 0.4))
+  system-system-spacing = #'((basic-distance . 0.5) (padding . 0.5))
   ragged-last-bottom = ##f
   ragged-bottom = ##f
   scoreTitleMarkup = \markup {
