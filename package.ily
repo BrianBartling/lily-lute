@@ -5,10 +5,12 @@
 \registerOption tab-tools.raiseNoteHeads              #0.32
 \registerOption tab-tools.labelFont                   #"Bravura"
 
-\registerOption tab-tools.tab-duration.useFlags       ##f
-\registerOption tab-tools.tab-duration.useGrids       ##f
-\registerOption tab-tools.tab-duration.useNoteHeads   ##t
+\registerOption tab-tools.tab-duration.useFlags       ##t
+\registerOption tab-tools.tab-duration.useGrids       ##t
+\registerOption tab-tools.tab-duration.useNoteHeads   ##f
 \registerOption tab-tools.tab-duration.hideRepeated   ##t
+\registerOption tab-tools.tab-duration.useMensural    ##t
+\registerOption tab-tools.tab-duration.mensuralModifier #0
 \registerOption tab-tools.tab-duration.gridSlant      #.75
 \registerOption tab-tools.tab-duration.slantType      #'extend
 \registerOption tab-tools.tab-duration.maxGrid        #4

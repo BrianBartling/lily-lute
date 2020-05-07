@@ -1,4 +1,18 @@
 %%%
+%%% Use mensural flags for stems with more than one flag
+%%% -- common practice found in many English manuscripts,
+%%%    see The Folger 'Dowland' Manuscript
+%%%
+
+#(define (modified-mensural-flag grob)
+  (let* ((stem-grob (ly:grob-parent grob X))
+         (log (ly:grob-property stem-grob 'duration-log))
+         (modifier (number->string (getOption '(tab-tools tab-duration mensuralModifier)))))
+   (if (> log 3)
+    (create-glyph-flag "mensural" modifier grob)
+    (old-straight-flag grob))))
+
+%%%
 %%% Modify bar line extents
 %%%
 

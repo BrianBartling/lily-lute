@@ -34,7 +34,9 @@
     \revert TextScript.stencil
 
     \override Flag.style = #'default
-    \override Flag.stencil = #old-straight-flag
+    #(if (getOption '(tab-tools tab-duration useMensural))
+      #{ \override Flag.stencil = #modified-mensural-flag #}
+      #{ \override Flag.stencil = #old-straight-flag #})
 
     \override TabNoteHead.Y-offset = 
     #(lambda (grob)
