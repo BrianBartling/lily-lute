@@ -111,12 +111,10 @@ removeHoldLine = #(define-event-function () ()
 	    (if (closer-to-zero? (round orig-sp) (round (ly:grob-staff-position y))
                  (round (ly:grob-staff-position closest-grob)))
 	    (begin
-             (ly:grob-set-property! y 'color red)
 	     (set! closest-grob y))))))
       (grobs (prev-hold-line hold-line)))
      (set! bound-grob closest-grob))
     (set! bound-grob (note-column (prev-hold-line hold-line))))
-   (ly:grob-set-property! bound-grob 'color blue)
    (ly:spanner-set-bound! grob RIGHT bound-grob)
    (if (getOption '(tab-tools hold-line flatLines))
     (flatten-line grob)
@@ -158,9 +156,6 @@ removeHoldLine = #(define-event-function () ()
    ;;; above/below the target grob.
    ;;; If there is a Fingering grob, adjust for that
    ;;; The line should be flat if it is being attached to a diapason
-  (ly:grob-set-property! grob 'color red)
-  (ly:grob-set-property! right-bound 'color green)
-  (ly:grob-set-property! (ly:spanner-bound grob LEFT) 'color blue)
   (let*  ((left-bound        (ly:spanner-bound grob LEFT))
           (right-staff-space (ly:grob-staff-position right-bound))
 	  (left-staff-space  (ly:grob-staff-position left-bound))
