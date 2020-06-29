@@ -339,7 +339,8 @@ killGrid = #(make-music 'KillGridEvent)
 	   (start-grid tab-duration grid engraver)))))
 
       ((dots-interface engraver grob source-engraver)
-	(ly:grob-set-object! (td-grob tab-duration) 'dots grob)))
+	(if (> (ly:duration-dot-count (duration tab-duration)) 0)
+         (ly:grob-set-object! (td-grob tab-duration) 'dots grob))))
 
      ((stop-translation-timestep translator)
       (if (getOption '(tab-tools tab-duration useGrids))
