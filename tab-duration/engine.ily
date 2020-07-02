@@ -20,6 +20,8 @@ killGrid = #(make-music 'KillGridEvent)
 %%%
 
 #(define-class <tab-duration> ()
+  (mom                  #:accessor mom
+                        #:init-value 0)
   (duration             #:accessor duration
    			#:init-value 0)
   (durlog               #:accessor durlog
@@ -299,7 +301,8 @@ killGrid = #(make-music 'KillGridEvent)
 
      (listeners
       ((rhythmic-event engraver event)
-        (let* ((rhythmic-duration  (ly:event-property event 'duration))
+        (let* ((now-mom            (ly:moment-main (ly:context-now context)))
+               (rhythmic-duration  (ly:event-property event 'duration))
 	       (rhythmic-durlog    (+ (ly:duration-log rhythmic-duration) 1))
 	       (rhythmic-durlength (ly:moment-main (ly:duration-length rhythmic-duration)))
 	       (rhythmic-grouping  (/ (ly:moment-main (ly:context-property context 'measureLength))
@@ -308,11 +311,29 @@ killGrid = #(make-music 'KillGridEvent)
         (if (or (null? (rhythmic-event tab-duration))
 	        (< rhythmic-durlength (durlength tab-duration)))
          (begin
+	  (set! (mom        tab-duration)    now-mom)
           (set! (rhythmic-event tab-duration)    event)
 	  (set! (duration   tab-duration)    rhythmic-duration)
 	  (set! (durlog     tab-duration)    rhythmic-durlog)
 	  (set! (durlength  tab-duration)    rhythmic-durlength)
-	  (set! (grouping-unit tab-duration) rhythmic-grouping)))))
+	  (set! (grouping-unit tab-duration) rhythmic-grouping)))
+
+        ;; Try to correct the duration flag if there is a timestep in another voice
+	(let ((calc-durlength  (- now-mom (mom prev-tab-duration))))
+	 (if (and (!= calc-durlength (durlength prev-tab-duration))
+	          (!= (durlength prev-tab-duration) 999))
+          (let ((calc-durlog  (+ (ly:intlog2 (/ 1 (- now-mom (mom prev-tab-duration)))) 1)))
+           (ly:grob-set-property! (td-grob prev-tab-duration) 'duration-log calc-durlog)
+           (ly:grob-set-property! (td-grob prev-tab-duration) 'transparent #f)
+           (set! (durlength prev-tab-duration) calc-durlength)
+           (set! (durlog prev-tab-duration) calc-durlog)
+  
+           (if (and (= (durlength tab-duration) calc-durlength)
+                    (not (in-grid? prev-tab-duration)))
+            (begin	      
+             (start-grid prev-tab-duration grid engraver)
+             (set! (print-flag? prev-tab-duration) #f)
+             (set! (in-grid? tab-duration) #t))))))))
 
      ((kill-grid-event engraver event)
        (set! (stop-gridline? grid) #t)))
