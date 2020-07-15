@@ -323,11 +323,19 @@ killGrid = #(make-music 'KillGridEvent)
 	 (if (and (!= calc-durlength (durlength prev-tab-duration))
 	          (!= (durlength prev-tab-duration) 999))
           (let ((calc-durlog  (+ (ly:intlog2 (/ 1 (- now-mom (mom prev-tab-duration)))) 1)))
+
+	   (if (> (ly:duration-dot-count (duration prev-tab-duration)) 0)
+             (if (= (- (durlength prev-tab-duration) calc-durlength)
+ 	           (* calc-durlength 2))
+                  (ly:grob-set-object! (td-grob prev-tab-duration) 'dots '())))
+
            (ly:grob-set-property! (td-grob prev-tab-duration) 'duration-log calc-durlog)
            (ly:grob-set-property! (td-grob prev-tab-duration) 'transparent #f)
+           (ly:grob-set-property! (flag prev-tab-duration) 'transparent #f)
+	   (ly:grob-set-object! (td-grob prev-tab-duration) 'print-flag? #t)
            (set! (durlength prev-tab-duration) calc-durlength)
            (set! (durlog prev-tab-duration) calc-durlog)
-  
+
            (if (and (= (durlength tab-duration) calc-durlength)
                     (not (in-grid? prev-tab-duration)))
             (begin	      
