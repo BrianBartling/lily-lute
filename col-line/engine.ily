@@ -31,9 +31,14 @@
 #(define (init-col-line context translator ref-grobs duration)
   (let* ((cl-event   (ly:make-stream-event (ly:make-event-class 'note-event)
 		      (list (cons 'duration duration))))
-	 (cl-grob    (ly:engraver-make-grob translator 'ColLine cl-event)))
-   (ly:grob-set-parent! cl-grob Y (car ref-grobs))
-   (ly:grob-set-parent! cl-grob X (car ref-grobs))
+	 (cl-grob    (ly:engraver-make-grob translator 'ColLine cl-event))
+	 (attachment-grob (if (< (ly:grob-staff-position (cdr ref-grobs)) 
+                                 (ly:grob-staff-position (car ref-grobs)))
+                           (cdr ref-grobs)
+			   (car ref-grobs))))
+
+   (ly:grob-set-parent! cl-grob Y attachment-grob)
+   (ly:grob-set-parent! cl-grob X attachment-grob)
    (ly:grob-set-object! cl-grob 'ref-grobs ref-grobs)
    (ly:grob-set-object! cl-grob 'middleCPosition (ly:context-property context 'middleCPosition))))
 
