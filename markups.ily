@@ -1,7 +1,5 @@
 %%%
 %%% Use mensural flags for stems with more than one flag
-%%% -- common practice found in many English manuscripts,
-%%%    see The Folger 'Dowland' Manuscript
 %%%
 
 #(define (modified-mensural-flag grob)
@@ -85,7 +83,7 @@ colLine = #(make-music 'ColLineEvent)
     	        glyphname (cdr glyph-assoc) (getOption '(tab-tools labelFont)))
      (interpret-markup layout props
       (markup (#:fontsize 5 
-      	       #:override `(font-name . (getOption '(tab-tools labelFont)))
+      	       #:override `(font-name . ,(getOption '(tab-tools labelFont)))
 	       #:char (cdr glyph-assoc)))))))
 
 arpBelow = #(make-music 'TabArticulationEvent 
