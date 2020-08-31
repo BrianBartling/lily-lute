@@ -1,7 +1,7 @@
 \version "2.21.0"
 
 \include "oll-core/package.ily"
-\loadPackage tab-tools
+\loadPackage lute-tab
 
 	
 m = {

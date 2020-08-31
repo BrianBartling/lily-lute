@@ -34,14 +34,14 @@
     \revert TextScript.stencil
 
     \override Flag.style = #'default
-    #(if (getOption '(tab-tools tab-duration useMensural))
+    #(if (getOption '(lute-tab tab-duration useMensural))
       #{ \override Flag.stencil = #modified-mensural-flag #}
       #{ \override Flag.stencil = #old-straight-flag #})
 
     \override TabNoteHead.Y-offset = 
     #(lambda (grob)
       (let ((default (ly:staff-symbol-referencer::callback grob)))
-  	(+ default (* (getOption '(tab-tools raiseNoteHeads))
+  	(+ default (* (getOption '(lute-tab raiseNoteHeads))
 	   	      (ly:staff-symbol-staff-space grob)))))	
 
     stringTunings = \stringTuning <g, c f a d' g'>

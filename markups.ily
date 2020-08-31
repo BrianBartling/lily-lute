@@ -5,7 +5,7 @@
 #(define (modified-mensural-flag grob)
   (let* ((stem-grob (ly:grob-parent grob X))
          (log (ly:grob-property stem-grob 'duration-log))
-         (modifier (number->string (getOption '(tab-tools tab-duration mensuralModifier)))))
+         (modifier (number->string (getOption '(lute-tab tab-duration mensuralModifier)))))
    (if (> log 3)
     (create-glyph-flag "mensural" modifier grob)
     (old-straight-flag grob))))
@@ -80,10 +80,10 @@ colLine = #(make-music 'ColLineEvent)
   (let* ((glyph-assoc (assoc glyphname smufl-map)))
    (begin
     (ly:debug "Using glyph ~a : ~a from font ~a\n" 
-    	        glyphname (cdr glyph-assoc) (getOption '(tab-tools labelFont)))
+    	        glyphname (cdr glyph-assoc) (getOption '(lute-tab labelFont)))
      (interpret-markup layout props
       (markup (#:fontsize 5 
-      	       #:override `(font-name . ,(getOption '(tab-tools labelFont)))
+      	       #:override `(font-name . ,(getOption '(lute-tab labelFont)))
 	       #:char (cdr glyph-assoc)))))))
 
 arpBelow = #(make-music 'TabArticulationEvent 

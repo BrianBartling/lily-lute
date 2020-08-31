@@ -1,12 +1,12 @@
-# tab-tools
+# lute-tab
 
-*tab-tools* is a toolbox containing assorted tools for typesetting
+*lute-tab* is a toolbox containing assorted tools for typesetting
 lute tablature. It is currently only implemented for French-style
 Renaissance tablature.
 
 This package is intended to be used with GNU LilyPond.
 It belongs to *openLilyLib*, LilyPond's community library system.
-Therefore getting and installing *tab-tools* is automatically handled by
+Therefore getting and installing *lute-tab* is automatically handled by
 preparing *openLilyLib*.
 See its [home page](https://github.com/openlilylib/openlilylib) for details.
 
@@ -15,7 +15,7 @@ GNU General Public License. See *openLilyLib*'s license for details.
 
 ## Overview
 
-*tab-tools*'s development is ongoing, it currently includes a
+*lute-tab*'s development is ongoing, it currently includes a
 a number of functions used for typesetting Renaissance Lute music in French-
 style tablature. A short list of these includes:
 
@@ -36,23 +36,23 @@ from this same package or from the [the SMuFL website](http://www.smufl.org/font
 
 ### Using the Package
 
-Prerequisite to using *tab-tools* is activating *openLilyLib* with
+Prerequisite to using *lute-tab* is activating *openLilyLib* with
 
 ```lilypond
 \include "oll-core/package.ily"
 ```
 
 *openLilyLib* will only be initialized once so it is safe to use this command in 
-multiple initialization files. *tab-tools* is loaded with *openLilyLib*'s `\loadPackage` utility:
+multiple initialization files. *lute-tab* is loaded with *openLilyLib*'s `\loadPackage` utility:
 
 ```lilypond
-\loadPackage tab-tools
+\loadPackage lute-tab
 ```
 
-All of *tab-tools*'s internal modules are loaded implicitly, so
+All of *lute-tab*'s internal modules are loaded implicitly, so
 there is no need to declare modules to be loaded explicitly.
 
-The current options for *tab-tools* are:
+The current options for *lute-tab* are:
 
 * raiseNoteHeads: How much the note-head labels should be raised in staff-space units
   (default - `0.32`)

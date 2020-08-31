@@ -13,9 +13,9 @@
 
 #(define (tab-duration::print me)
   (cond 
-   ((getOption '(tab-tools tab-duration useFlags))
+   ((getOption '(lute-tab tab-duration useFlags))
      (flag-style me))
-   ((getOption '(tab-tools tab-duration useNoteHeads))
+   ((getOption '(lute-tab tab-duration useNoteHeads))
      (note-head-style me))))
 
 #(define (note-head-style me)

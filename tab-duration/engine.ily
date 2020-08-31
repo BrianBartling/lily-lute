@@ -169,7 +169,7 @@ killGrid = #(make-music 'KillGridEvent)
 #(define (set-slant tab-duration grid)
   (let 	((length    (/ (ly:grob-property (td-grob tab-duration) 'length)
 		     (ly:staff-symbol-staff-space (td-grob tab-duration))))
-	 (slant     (/ (getOption '(tab-tools tab-duration gridSlant))
+	 (slant     (/ (getOption '(lute-tab tab-duration gridSlant))
 		     (ly:staff-symbol-staff-space (td-grob tab-duration)))))
 
    (begin
@@ -181,14 +181,14 @@ killGrid = #(make-music 'KillGridEvent)
      (lines grid))
 
     (cond 
-     ((equal? (getOption '(tab-tools tab-duration slantType)) 'extend)
+     ((equal? (getOption '(lute-tab tab-duration slantType)) 'extend)
       (ly:grob-set-property! (td-grob tab-duration) 'length
        (+ length (grid-slant tab-duration))))
-     ((equal? (getOption '(tab-tools tab-duration slantType)) 'shift)
+     ((equal? (getOption '(lute-tab tab-duration slantType)) 'shift)
       (ly:grob-set-property! (td-grob tab-duration) 'Y-offset slant))
      (else
       (ly:warning "unrecognized slantType property: ~a" 
-       (getOption '(tab-tools tab-duration slantType))))))))
+       (getOption '(lute-tab tab-duration slantType))))))))
 
 #(define (process-grids tab-duration prev-tab-duration grid translator context)
   (let ((gridspace (/ (+ (ly:moment-main (m-pos tab-duration)) (durlength tab-duration))
@@ -227,7 +227,7 @@ killGrid = #(make-music 'KillGridEvent)
 
      ;; Set the slant for this grob
      (if (and (in-grid? tab-duration) 
-	  (> (getOption '(tab-tools tab-duration gridSlant)) 0))
+	  (> (getOption '(lute-tab tab-duration gridSlant)) 0))
       (set-slant tab-duration grid))))
 
    ;; Format this grob if we are in a grid
@@ -236,7 +236,7 @@ killGrid = #(make-music 'KillGridEvent)
      (ly:grob-set-property! (td-grob tab-duration) 'outside-staff-priority #f)
      (set! (in-grid-count grid) (+ (in-grid-count grid) 1))
 
-     (if (>= (in-grid-count grid) (getOption '(tab-tools tab-duration maxGrid)))
+     (if (>= (in-grid-count grid) (getOption '(lute-tab tab-duration maxGrid)))
       (set! (stop-gridline? grid) #t))
      
      (ly:grob-set-parent! (td-grob tab-duration) Y (td-grob prev-tab-duration))
@@ -278,10 +278,10 @@ killGrid = #(make-music 'KillGridEvent)
      (ly:grob-set-object! (td-grob tab-duration) 'print-flag? #f)
      (ly:grob-set-object! (td-grob tab-duration) 'print-flag? #t))
 
-    (if (getOption '(tab-tools tab-duration useGrids))
+    (if (getOption '(lute-tab tab-duration useGrids))
      (process-grids tab-duration prev-tab-duration grid translator context))
 
-    (if (getOption '(tab-tools tab-duration hideRepeated))
+    (if (getOption '(lute-tab tab-duration hideRepeated))
      (make-transparent tab-duration prev-tab-duration grid))
 
   )))
@@ -359,7 +359,7 @@ killGrid = #(make-music 'KillGridEvent)
 	 (ly:grob-suicide! (ly:grob-object grob 'flag))))
 
       ((note-column-interface engraver grob source-engraver)
-	(if (getOption '(tab-tools tab-duration useGrids))
+	(if (getOption '(lute-tab tab-duration useGrids))
 	 (begin
 	  (if (stop-gridline? grid)
 	   (end-grid tab-duration grid engraver))
@@ -372,7 +372,7 @@ killGrid = #(make-music 'KillGridEvent)
          (ly:grob-set-object! (td-grob tab-duration) 'dots grob))))
 
      ((stop-translation-timestep translator)
-      (if (getOption '(tab-tools tab-duration useGrids))
+      (if (getOption '(lute-tab tab-duration useGrids))
        (begin
 	(if (start-gridline? grid)
 	 (begin
@@ -391,7 +391,7 @@ killGrid = #(make-music 'KillGridEvent)
       )
      
      ((finalize translator)
-      (if (getOption '(tab-tools tab-duration useGrids))
+      (if (getOption '(lute-tab tab-duration useGrids))
        (begin
 	(if (not (null? (lines grid)))
 	 (begin

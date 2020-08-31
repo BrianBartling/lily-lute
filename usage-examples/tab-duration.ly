@@ -1,9 +1,9 @@
 \version "2.21.0"
 
 \include "oll-core/package.ily"
-\loadPackage tab-tools
+\loadPackage lute-tab
 
-\setOption tab-tools.tab-duration.gridSlant #0.2
+\setOption lute-tab.tab-duration.gridSlant #0.2
 
 m = {
   \time 4/4
