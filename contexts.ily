@@ -2,6 +2,9 @@
 %%% Contexts
 %%%
 
+useMensural = #(getOption '(lute-tab tab-duration useMensural))
+raiseNoteHeads = #(getOption '(lute-tab raiseNoteHeads))
+
 \layout {
   \context {
     \Global
@@ -34,15 +37,15 @@
     \revert TextScript.stencil
 
     \override Flag.style = #'default
-    #(if (getOption '(lute-tab tab-duration useMensural))
+    #(if useMensural
       #{ \override Flag.stencil = #modified-mensural-flag #}
       #{ \override Flag.stencil = #old-straight-flag #})
 
     \override TabNoteHead.Y-offset = 
     #(lambda (grob)
       (let ((default (ly:staff-symbol-referencer::callback grob)))
-  	(+ default (* (getOption '(lute-tab raiseNoteHeads))
-	   	      (ly:staff-symbol-staff-space grob)))))	
+    	(+ default (* raiseNoteHeads
+    	   	      (ly:staff-symbol-staff-space grob)))))	
 
     stringTunings = \stringTuning <g, c f a d' g'>
     additionalBassStrings = \stringTuning <d, f,>
