@@ -28,7 +28,8 @@ m = {
   \break
 
   \time 4/4
-  \override FrenchTabStaff.TabGrid.overshoot = #'(0 . 0.7)
+  \override FrenchTabStaff.TabGrid.bound-details.left.overshoot = #0.0
+  \override FrenchTabStaff.TabGrid.bound-details.right.overshoot = #1.2
   a8 b16 c' d' e' f' g' a'4 e'8 c' a1
 
   \break

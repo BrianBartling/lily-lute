@@ -3,6 +3,9 @@
 \include "oll-core/package.ily"
 \loadPackage lute-tab
 
+\setOption lute-tab.tab-duration.gridSlant    #0
+\setOption lute-tab.tab-duration.useMensural  ##f
+
 m = {
   \time 5/8
       d'4. <g, g\arpBelow d' g'>8 fis'16\arpBelow g'\index
@@ -72,14 +75,20 @@ m = {
 }
 
 \score {
-  \new FrenchTabStaff {
-    \omit Score.BarLine
-    \omit Score.BarNumber
-    \m
-  }
-
   \layout {
     indent = 0\in
     ragged-last = ##t
+
+    \context {
+      \FrenchTabStaff
+      \override Flag.stencil = #old-straight-flag
+    }
+  }
+
+  \new FrenchTabStaff {
+    \omit Score.BarLine
+    \omit Score.BarNumber
+
+    \m
   }
 }

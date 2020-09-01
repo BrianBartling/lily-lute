@@ -3,6 +3,9 @@
 \include "oll-core/package.ily"
 \loadPackage lute-tab
 
+\setOption lute-tab.tab-duration.useGrids       ##f
+\setOption lute-tab.tab-duration.useMensural    ##f
+
 m = {
   \time 2/4 \partial 8 g'8
   <g, g'>\colLine d' <g d' g'> a'\index

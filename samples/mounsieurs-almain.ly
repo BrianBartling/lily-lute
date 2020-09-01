@@ -3,6 +3,8 @@
 \include "oll-core/package.ily"
 \loadPackage lute-tab
 
+\setOption lute-tab.tab-duration.gridSlant      #0.0
+
 m = {
   \time 4/4
   % 1
@@ -98,13 +100,21 @@ m = {
 }
 
 \score {
-  \new FrenchTabStaff {
-    \omit Score.BarNumber
-    \m
-  }
-
   \layout {
     indent = 0\in
     ragged-last = ##t
+
+    \context {
+      \FrenchTabStaff
+      \override Flag.stencil = #flat-flag
+    }
+  }
+
+  \new FrenchTabStaff {
+    \omit Score.BarNumber
+    \override FrenchTabStaff.TabGrid.top-space = #0.62
+    \override FrenchTabStaff.TabGrid.bound-details.left.overshoot = #-0.2
+    \override FrenchTabStaff.TabGrid.bound-details.right.overshoot = #-0.2
+    \m
   }
 }

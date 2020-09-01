@@ -1,4 +1,13 @@
 %%%
+%%% Stylistic Functions
+%%%
+
+#(define (tab-note-head-offset grob)
+  (let ((default (ly:staff-symbol-referencer::callback grob)))
+   (+ default (* (getOption '(lute-tab raiseNoteHeads))
+                 (ly:staff-symbol-staff-space grob)))))
+
+%%%
 %%% Use mensural flags for stems with more than one flag
 %%%
 

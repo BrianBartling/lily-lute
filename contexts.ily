@@ -37,15 +37,11 @@ raiseNoteHeads = #(getOption '(lute-tab raiseNoteHeads))
     \revert TextScript.stencil
 
     \override Flag.style = #'default
-    #(if useMensural
-      #{ \override Flag.stencil = #modified-mensural-flag #}
-      #{ \override Flag.stencil = #old-straight-flag #})
+    \override Flag.stencil = #modified-mensural-flag
 
     \override TabNoteHead.Y-offset = 
     #(lambda (grob)
-      (let ((default (ly:staff-symbol-referencer::callback grob)))
-    	(+ default (* raiseNoteHeads
-    	   	      (ly:staff-symbol-staff-space grob)))))	
+      (tab-note-head-offset grob))
 
     stringTunings = \stringTuning <g, c f a d' g'>
     additionalBassStrings = \stringTuning <d, f,>

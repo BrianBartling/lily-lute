@@ -6,6 +6,7 @@
 
 #(define-grob-property 'top-space number? "The amount of space at the top of the grid")
 #(define-grob-property 'grid-space number? "The amount of space between each gridline")
+#(define-grob-property 'overshoot number? "The length that a grid gets extended")
 
 %%%
 %%% Grob routines
