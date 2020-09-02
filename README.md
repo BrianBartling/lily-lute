@@ -1,8 +1,7 @@
 # lute-tab
 
-*lute-tab* is a toolbox containing assorted tools for typesetting
-lute tablature. It is currently only implemented for French-style
-Renaissance tablature.
+*lute-tab* contains a variety of tools used for typesetting
+French-style Renaissance lute tablature.
 
 This package is intended to be used with GNU LilyPond.
 It belongs to *openLilyLib*, LilyPond's community library system.
@@ -15,24 +14,23 @@ GNU General Public License. See *openLilyLib*'s license for details.
 
 ## Overview
 
-*lute-tab*'s development is ongoing, it currently includes a
-a number of functions used for typesetting Renaissance Lute music in French-
-style tablature. A short list of these includes:
+A short list of *lute-tab*'s features includes:
 
-* Utilities for drawing durational flags & grids, a style seen often in English tablature
+* Utilities for drawing durational flags & grids, a style seen often in English Renaissance tablature
 * The `FrenchTabStaff` context
 * The `\colLine` function, which draws a vertical line between the bass and
   treble note(s)
 * Functions for drawing RH-fingering directives
+* Hold lines and other assorted markups
 
 ## Getting Started
 
 ### Installing the Font Files
 
-The Bravura fonts needs to be installed and the data file for smufl's encoding
-definitions needs to be available. The latter is part of the 
-`snippets/custom-music-fonts/smufl` OLL package and the latter can be installed
-from this same package or from the [the SMuFL website](http://www.smufl.org/fonts/)
+*lute-tab* requires the Bravura fonts ands its accompanying SMuFL encoding definitions (snippets/custom-music-fonts/smufl/smufldata.ily).
+Both are available in the
+`snippets/custom-music-fonts/smufl` OLL package, but the font can also be installed
+from the [the SMuFL website](http://www.smufl.org/fonts/)
 
 ### Using the Package
 
@@ -61,14 +59,30 @@ The current options for *lute-tab* are:
   the smufl encoding definitions.
   (default - `"Bravura"`)
 
-* tab-duration.hideRepeated: Should repeated durations print a flag?
+* tab-duration.useFlags: Should durations use flags?
   (default - `#t`)
+* tab-duration.useNoteHeads: Should durations use noteheads?
+  (default - `#f`)
+  
+  *Either tab-duration.useFlags or tab-duration.useNoteHeads should be `#t`*
+
 * tab-duration.useGrids: Should grids be used?
   (default - `#t`)
+* tab-duration.hideRepeated: Should repeated durations print a flag?
+  (default - `#t`)
+* tab-duration.useMensural: Should non-grid durations use mensural flags?
+  (default - `#t`)
+* tab-duration.mensuralModifier: The mensural flags are taken from the parmesan fonts. Which set of flags?
+  (default - `0`)
 * tab-duration.gridSlant: How much slant in the duration grids in staff-space units
   (default - `0.75`)
 * tab-duration.slantType: Should the grid poles be extended (`'extend`) or shifted
   (`'shift`) to accomodate the slant
-  (default - `'extent`)
+  (default - `'extend`)
 * tab-duration. maxGrid: The total number of notes allowable in a grid
   (default - `4`)
+
+* hold-line.attachToClosest: Should the hold line try to attach to the closest notehead?
+  (default - `#t`)
+* hold-line.flatLines: Should the hold lines be flat by default?
+  (default - `#f`)
