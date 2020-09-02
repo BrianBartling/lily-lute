@@ -6,8 +6,8 @@
 \registerOption lute-tab.labelFont                   #"Bravura"
 
 \registerOption lute-tab.tab-duration.useFlags       ##t
-\registerOption lute-tab.tab-duration.useGrids       ##t
 \registerOption lute-tab.tab-duration.useNoteHeads   ##f
+\registerOption lute-tab.tab-duration.useGrids       ##t
 \registerOption lute-tab.tab-duration.hideRepeated   ##t
 \registerOption lute-tab.tab-duration.useMensural    ##t
 \registerOption lute-tab.tab-duration.mensuralModifier #0
