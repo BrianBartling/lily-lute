@@ -1,11 +1,11 @@
-# lute-tab
+# lily-lute
 
-*lute-tab* contains a variety of tools used for typesetting
+*lily-lute* contains a variety of tools used for typesetting
 French-style Renaissance lute tablature.
 
 This package is intended to be used with GNU LilyPond.
 It belongs to *openLilyLib*, LilyPond's community library system.
-Therefore getting and installing *lute-tab* is automatically handled by
+Therefore getting and installing *lily-lute* is automatically handled by
 preparing *openLilyLib*.
 See its [home page](https://github.com/openlilylib/openlilylib) for details.
 
@@ -14,7 +14,7 @@ GNU General Public License. See *openLilyLib*'s license for details.
 
 ## Overview
 
-A short list of *lute-tab*'s features includes:
+A short list of *lily-lute*'s features includes:
 
 * Utilities for drawing durational flags & grids, a style seen often in English Renaissance tablature
 * The `FrenchTabStaff` context
@@ -27,30 +27,30 @@ A short list of *lute-tab*'s features includes:
 
 ### Installing the Font Files
 
-*lute-tab* requires the Bravura fonts ands its accompanying SMuFL encoding definitions (snippets/custom-music-fonts/smufl/smufldata.ily).
+*lily-lute* requires the Bravura fonts ands its accompanying SMuFL encoding definitions (snippets/custom-music-fonts/smufl/smufldata.ily).
 Both are available in the
 `snippets/custom-music-fonts/smufl` OLL package, but the font can also be installed
 from the [the SMuFL website](http://www.smufl.org/fonts/)
 
 ### Using the Package
 
-Prerequisite to using *lute-tab* is activating *openLilyLib* with
+Prerequisite to using *lily-lute* is activating *openLilyLib* with
 
 ```lilypond
 \include "oll-core/package.ily"
 ```
 
 *openLilyLib* will only be initialized once so it is safe to use this command in 
-multiple initialization files. *lute-tab* is loaded with *openLilyLib*'s `\loadPackage` utility:
+multiple initialization files. *lily-lute* is loaded with *openLilyLib*'s `\loadPackage` utility:
 
 ```lilypond
-\loadPackage lute-tab
+\loadPackage lily-lute
 ```
 
-All of *lute-tab*'s internal modules are loaded implicitly, so
+All of *lily-lute*'s internal modules are loaded implicitly, so
 there is no need to declare modules to be loaded explicitly.
 
-The current options for *lute-tab* are:
+The current options for *lily-lute* are:
 
 * raiseNoteHeads: How much the note-head labels should be raised in staff-space units
   (default - `0.32`)

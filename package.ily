@@ -2,22 +2,22 @@
 %%% Options
 %%%
 
-\registerOption lute-tab.raiseNoteHeads              #0.32
-\registerOption lute-tab.labelFont                   #"Bravura"
+\registerOption lily-lute.raiseNoteHeads              #0.32
+\registerOption lily-lute.labelFont                   #"Bravura"
 
-\registerOption lute-tab.tab-duration.useFlags       ##t
-\registerOption lute-tab.tab-duration.useNoteHeads   ##f
-\registerOption lute-tab.tab-duration.useGrids       ##t
-\registerOption lute-tab.tab-duration.hideRepeated   ##t
-\registerOption lute-tab.tab-duration.useMensural    ##t
-\registerOption lute-tab.tab-duration.mensuralModifier #0
-\registerOption lute-tab.tab-duration.gridSlant      #.75
-\registerOption lute-tab.tab-duration.slantType      #'extend
-\registerOption lute-tab.tab-duration.maxGrid        #4
+\registerOption lily-lute.tab-duration.useFlags       ##t
+\registerOption lily-lute.tab-duration.useNoteHeads   ##f
+\registerOption lily-lute.tab-duration.useGrids       ##t
+\registerOption lily-lute.tab-duration.hideRepeated   ##t
+\registerOption lily-lute.tab-duration.useMensural    ##t
+\registerOption lily-lute.tab-duration.mensuralModifier #0
+\registerOption lily-lute.tab-duration.gridSlant      #.75
+\registerOption lily-lute.tab-duration.slantType      #'extend
+\registerOption lily-lute.tab-duration.maxGrid        #4
 
-\registerOption lute-tab.hold-line.attachToClosest   ##t
-\registerOption lute-tab.hold-line.flatLines         ##f
-\registerOption lute-tab.hold-line.diapasonLevel     #-4.5
+\registerOption lily-lute.hold-line.attachToClosest   ##t
+\registerOption lily-lute.hold-line.flatLines         ##f
+\registerOption lily-lute.hold-line.diapasonLevel     #-4.5
 
 %%%
 %%% Includes

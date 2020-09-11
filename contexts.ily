@@ -2,8 +2,8 @@
 %%% Contexts
 %%%
 
-useMensural = #(getOption '(lute-tab tab-duration useMensural))
-raiseNoteHeads = #(getOption '(lute-tab raiseNoteHeads))
+useMensural = #(getOption '(lily-lute tab-duration useMensural))
+raiseNoteHeads = #(getOption '(lily-lute raiseNoteHeads))
 
 \layout {
   \context {

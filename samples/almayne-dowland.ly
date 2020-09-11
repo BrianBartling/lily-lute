@@ -1,10 +1,10 @@
 \version "2.21.0"
 
 \include "oll-core/package.ily"
-\loadPackage lute-tab
+\loadPackage lily-lute
 
-\setOption lute-tab.tab-duration.gridSlant    #0
-\setOption lute-tab.tab-duration.useMensural  ##f
+\setOption lily-lute.tab-duration.gridSlant    #0
+\setOption lily-lute.tab-duration.useMensural  ##f
 
 m = {
   \time 5/8

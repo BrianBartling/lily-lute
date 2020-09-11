@@ -1,9 +1,9 @@
 \version "2.21.0"
 
 \include "oll-core/package.ily"
-\loadPackage lute-tab
+\loadPackage lily-lute
 
-\registerOption lute-tab.tab-duration.mensuralModifier #2
+\registerOption lily-lute.tab-duration.mensuralModifier #2
 
 m = \relative c { \time 2/4
 		  <d a' d>4 <a' d>8 <a, a' cis>

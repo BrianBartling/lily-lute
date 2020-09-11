@@ -1,12 +1,12 @@
 \version "2.21.0"
 
 \include "oll-core/package.ily"
-\loadPackage lute-tab
+\loadPackage lily-lute
 
-\setOption lute-tab.tab-duration.useGrids       ##f
-\setOption lute-tab.tab-duration.useMensural    ##f
-\setOption lute-tab.tab-duration.useNoteHeads   ##t
-\setOption lute-tab.tab-duration.useFlags       ##f
+\setOption lily-lute.tab-duration.useGrids       ##f
+\setOption lily-lute.tab-duration.useMensural    ##f
+\setOption lily-lute.tab-duration.useNoteHeads   ##t
+\setOption lily-lute.tab-duration.useFlags       ##f
 
 m = {
   \time 2/4 \partial 8 g'8

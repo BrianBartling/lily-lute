@@ -1,7 +1,7 @@
 \version "2.21.0"
 
 \include "oll-core/package.ily"
-\loadPackage lute-tab
+\loadPackage lily-lute
 
 m =  { \time 4/4
        <g, g\mordUp d' g'>2 <g d' bes\mordUp>
