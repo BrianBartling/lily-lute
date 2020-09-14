@@ -82,6 +82,8 @@ The current options for *lily-lute* are:
 * tab-duration. maxGrid: The total number of notes allowable in a grid
   (default - `4`)
 
+* hold-line.allLines: Attach a hold line to all potential note values
+  (default - `#f`)
 * hold-line.attachToClosest: Should the hold line try to attach to the closest notehead?
   (default - `#t`)
 * hold-line.flatLines: Should the hold lines be flat by default?

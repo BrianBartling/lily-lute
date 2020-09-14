@@ -51,6 +51,9 @@ raiseNoteHeads = #(getOption '(lily-lute raiseNoteHeads))
       		   \label-glyph "luteFrenchFretC" \label-glyph "luteFrenchFretD"
       		   \label-glyph "luteFrenchFretE" \label-glyph "luteFrenchFretF"
       		   \label-glyph "luteFrenchFretG" \label-glyph "luteFrenchFretH"
+		   \label-glyph "luteFrenchFretI" \label-glyph "luteFrenchFretK"
+		   \label-glyph "luteFrenchFretL" \label-glyph "luteFrenchFretM"
+		   \label-glyph "luteFrenchFretN"
       		 }
   }
 

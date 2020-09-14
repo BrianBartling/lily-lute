@@ -15,6 +15,7 @@
 \registerOption lily-lute.tab-duration.slantType      #'extend
 \registerOption lily-lute.tab-duration.maxGrid        #4
 
+\registerOption lily-lute.hold-line.allLines          ##f
 \registerOption lily-lute.hold-line.attachToClosest   ##t
 \registerOption lily-lute.hold-line.flatLines         ##f
 \registerOption lily-lute.hold-line.diapasonLevel     #-4.5

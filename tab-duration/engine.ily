@@ -15,6 +15,14 @@
 
 killGrid = #(make-music 'KillGridEvent)
 
+
+#(hashq-set! music-name-to-property-table 'ForceGridEvent
+  '((name . ForceGridEvent) (types post-event event force-grid-event)))
+
+#(define-event-class 'force-grid-event 'annotate-output-event)
+
+forceGrid = #(make-music 'ForceGridEvent)
+
 %%%
 %%% Tab Duration data structure
 %%%
@@ -53,7 +61,11 @@ killGrid = #(make-music 'KillGridEvent)
   (stop-gridline?        #:accessor stop-gridline?
   			 #:init-value #f)
   (num-lines             #:accessor num-lines
-  			 #:init-value 0))
+  			 #:init-value 0)
+
+  (force-grid?          #:accessor force-grid?
+                        #:init-value #f)
+)
 	     
 %%%
 %%% Misc functions
@@ -194,6 +206,8 @@ killGrid = #(make-music 'KillGridEvent)
   (let ((gridspace (/ (+ (ly:moment-main (m-pos tab-duration)) (durlength tab-duration))
 		    (grouping-unit tab-duration))))
 
+    (if (force-grid? grid)
+     (set! gridspace 1))
    ;; We may have to end the grid prematurely, i.e. if the last duration is
    ;; not the same as the current one, or if we encounter a barline
    (if (or (and (!= (durlength prev-tab-duration) 0)
@@ -306,7 +320,7 @@ killGrid = #(make-music 'KillGridEvent)
 	       (rhythmic-durlog    (+ (ly:duration-log rhythmic-duration) 1))
 	       (rhythmic-durlength (ly:moment-main (ly:duration-length rhythmic-duration)))
 	       (rhythmic-grouping  (/ (ly:moment-main (ly:context-property context 'measureLength))
-	       			  (car (ly:context-property context 'timeSignatureFraction)))))
+	       			      (car (ly:context-property context 'timeSignatureFraction)))))
 
         (if (or (null? (rhythmic-event tab-duration))
 	        (< rhythmic-durlength (durlength tab-duration)))
@@ -344,7 +358,10 @@ killGrid = #(make-music 'KillGridEvent)
              (set! (in-grid? tab-duration) #t))))))))
 
      ((kill-grid-event engraver event)
-       (set! (stop-gridline? grid) #t)))
+       (set! (stop-gridline? grid) #t))
+
+     ((force-grid-event engraver event)
+       (set! (force-grid? grid) #t)))
 
      ((process-music translator)
        (init-tab-duration tab-duration prev-tab-duration grid translator context))
@@ -388,6 +405,8 @@ killGrid = #(make-music 'KillGridEvent)
 	 (class-slots <tab-duration>))
 
 	(set! (rhythmic-event tab-duration) '())
+
+	(set! (force-grid? grid) #f)
       )
      
      ((finalize translator)

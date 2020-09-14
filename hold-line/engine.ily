@@ -18,6 +18,10 @@ adjustEndpoints = #(define-event-function (params) (pair?)
                                 'what 'adjust-endpoints
                                 'value params))
 
+holdLine      = #(define-event-function () ()
+                  (make-music  'HoldLineEvent
+		               'what 'make-line))
+
 removeHoldLine = #(define-event-function () ()
                    (make-music 'HoldLineEvent
 		               'what 'remove))
@@ -41,6 +45,8 @@ removeHoldLine = #(define-event-function () ()
                       #:init-value     '())
   (fng-grob           #:accessor fng-grob
                       #:init-value     '())
+  (make-line?         #:accessor make-line?
+                      #:init-value     #f)
   (remove?            #:accessor remove?
                       #:init-value     #f)
   (lines              #:accessor lines
@@ -61,7 +67,8 @@ removeHoldLine = #(define-event-function () ()
 #(define (make-hl-grob translator hold-line note-ev parent-grob)
   (let* ((hl-grob   (ly:engraver-make-grob translator 'HoldLine note-ev)))
    ;; Don't initialize a hold line if it's coming from a diapason
-   (if (and (not (remove? hold-line))
+   (if (and (make-line? hold-line)
+            (not (remove? hold-line))
             (not (< (ly:grob-staff-position parent-grob)
                     (getOption '(lily-lute hold-line diapasonLevel)))))
     (begin
@@ -260,7 +267,9 @@ removeHoldLine = #(define-event-function () ()
     (make-engraver
     
     ((initialize translator)
-     (set! (prev-hold-line hold-line) (make <hold-line>)))
+     (set! (prev-hold-line hold-line) (make <hold-line>))
+     (if (getOption '(lily-lute hold-line allLines))
+         (set! (make-line? hold-line) #t)))
 
      (listeners
       ((note-event engraver event)
@@ -273,6 +282,8 @@ removeHoldLine = #(define-event-function () ()
         (cond
 	 ((equal? event-type 'adjust-endpoints)
 	  (set! (adjust hold-line) (ly:event-property event 'value)))
+         ((equal? event-type 'make-line)
+	  (set! (make-line? hold-line) #t))
          ((equal? event-type 'remove)
 	  (set! (remove? hold-line) #t)))))
       ((tab-articulation-event engraver event)
@@ -305,7 +316,7 @@ removeHoldLine = #(define-event-function () ()
 
        (nullify-hold-line hold-line)
        (set! note-evs '())
-
+       (set! (make-line? hold-line) (getOption '(lily-lute hold-line allLines)))
        (set! note-head-grobs '()))
 
      ((finalize translator)

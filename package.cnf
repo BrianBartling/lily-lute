@@ -11,11 +11,12 @@ description: <
   >
 modules: [
   col-line
-  tab-duration
+  hold-line
   tab-articulation
+  tab-duration
   ]
 oll-core: 0.5.0
 maintainers: [
   Brian Bartling <brian.bartling23@gmail.com>
   ]
-version: 0.1.0
+version: 0.1.2
