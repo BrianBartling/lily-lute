@@ -14,7 +14,7 @@
 #(define (modified-mensural-flag grob)
   (let* ((stem-grob (ly:grob-parent grob X))
          (log (ly:grob-property stem-grob 'duration-log))
-         (modifier (number->string (getOption '(lily-lute tab-duration mensuralModifier)))))
+         (modifier "0"))
    (if (> log 3)
     (create-glyph-flag "mensural" modifier grob)
     (old-straight-flag grob))))

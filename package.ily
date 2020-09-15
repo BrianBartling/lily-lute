@@ -10,7 +10,6 @@
 \registerOption lily-lute.tab-duration.useGrids       ##t
 \registerOption lily-lute.tab-duration.hideRepeated   ##t
 \registerOption lily-lute.tab-duration.useMensural    ##t
-\registerOption lily-lute.tab-duration.mensuralModifier #0
 \registerOption lily-lute.tab-duration.gridSlant      #.75
 \registerOption lily-lute.tab-duration.slantType      #'extend
 \registerOption lily-lute.tab-duration.maxGrid        #4

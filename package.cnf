@@ -4,10 +4,10 @@
 
 name: lily-lute
 display-name: lily-lute
-short-description: Toolbox for Lute Tablature
+short-description: Toolbox for Renaissance Lute Tablature
 description: <
-  A set of tools and fonts used for typesetting calligraphic
-  lute tablature in GNU LilyPond.
+  A set of tools and fonts used for typesetting French-style
+  Renaissance lute tablature in GNU LilyPond.
   >
 modules: [
   col-line
@@ -19,4 +19,4 @@ oll-core: 0.5.0
 maintainers: [
   Brian Bartling <brian.bartling23@gmail.com>
   ]
-version: 0.1.2
+version: 0.1.3

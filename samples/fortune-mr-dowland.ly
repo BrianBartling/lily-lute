@@ -3,8 +3,6 @@
 \include "oll-core/package.ily"
 \loadPackage lily-lute
 
-\registerOption lily-lute.tab-duration.mensuralModifier #2
-
 m = \relative c { \time 2/4
 		  <d a' d>4 <a' d>8 <a, a' cis>
 		  \bar "|" % 1

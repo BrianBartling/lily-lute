@@ -4,13 +4,10 @@
 French-style Renaissance lute tablature.
 
 This package is intended to be used with GNU LilyPond.
-It belongs to *openLilyLib*, LilyPond's community library system.
+It was written in the *openLilyLib* framework, LilyPond's community library system.
 Therefore getting and installing *lily-lute* is automatically handled by
 preparing *openLilyLib*.
 See its [home page](https://github.com/openlilylib/openlilylib) for details.
-
-As part of *openLilyLib*, this library is released under the
-GNU General Public License. See *openLilyLib*'s license for details.
 
 ## Overview
 
@@ -54,9 +51,7 @@ The current options for *lily-lute* are:
 
 * raiseNoteHeads: How much the note-head labels should be raised in staff-space units
   (default - `0.32`)
-* labelFont: Which font should be used to typeset the note-head labels? Currently the
-  only option is `"Bravura"`, but can be set to another font if implemented according to 
-  the smufl encoding definitions.
+* labelFont: Which font should be used? Currently the only option is `"Bravura"`
   (default - `"Bravura"`)
 
 * tab-duration.useFlags: Should durations use flags?
@@ -72,8 +67,6 @@ The current options for *lily-lute* are:
   (default - `#t`)
 * tab-duration.useMensural: Should non-grid durations use mensural flags?
   (default - `#t`)
-* tab-duration.mensuralModifier: The mensural flags are taken from the parmesan fonts. Which set of flags?
-  (default - `0`)
 * tab-duration.gridSlant: How much slant in the duration grids in staff-space units
   (default - `0.75`)
 * tab-duration.slantType: Should the grid poles be extended (`'extend`) or shifted
