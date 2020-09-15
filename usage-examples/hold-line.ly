@@ -5,9 +5,9 @@
 
 	
 m = {
-  \time 4/4
-  << { g'2 fis' e' d' } \\
-     { g,1            } >>
+  \time 2/4
+  << { g'4 fis' e'2 } \\
+     { g,2\holdLine } >>
 
 }
 
