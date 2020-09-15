@@ -53,7 +53,7 @@ m = {
 
 \header {
   tagline = ##f
-  piece = "Noel's Delight — W. 7r"
+  piece = "Noel's Delight — Welde 7r"
 }
 
 \score {

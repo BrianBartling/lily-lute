@@ -96,7 +96,7 @@ m = {
 
 \header {
   tagline = ##f
-  piece = "Mounsieur's Almain — W. 14v-15r"
+  piece = "Mounsieur's Almain — Welde 14v-15r"
 }
 
 \score {

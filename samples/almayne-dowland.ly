@@ -71,7 +71,7 @@ m = {
 
 \header {
   tagline = ##f
-  piece = "Almayne Dowland — W. 5r"
+  piece = "Almayne Dowland — Welde 5r"
 }
 
 \score {
