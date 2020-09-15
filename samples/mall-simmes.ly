@@ -46,7 +46,7 @@ m =  { \time 4/4
        << { g2\mordUp } \\ { <g, d' g'>4. a'8\index } >> << { g2 } \\ { <d' bes'>8 g'16 a'\index bes' g'\index a' bes'\index } >>
        <d, d' a'\arpAbove>8 d'16 e'\index f' g'\index a' bes'\index a' g'\index f' e'\index << { bes,4 } \\ { d'16 e'\index f' d'\index } >>
        << { c4 } \\ { e'16 d'\index e' f'\index } >> << { ees4 } \\ { g'16 a'\index bes' g'\index } >> << { d2\adjustEndpoints #'((0 . 0) . (0 . -2)) } \\ { a'16 g'\2\index fis' e'\index g'32\2 fis'\index g'\2 fis'\index g'\2 fis'\index g'\2 e' fis'\index } >>
-       <g, g'\arpAbove>\colLine f'16 e'\index d' c'\index b a\index g\mordUp
+       <g, g'\arpAbove>\colLine\forceGrid f'16 e'\index d' c'\index b a\index g\mordUp
        \bar "|."
 
 
